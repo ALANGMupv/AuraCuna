@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name" translatable="false">Aura</string>
+    <string name="default_web_client_id" translatable="false">1006456212682-oikq1chql5jdrbv0eb7q1dpifcp1coqb.apps.googleusercontent.com</string>
+</resources>

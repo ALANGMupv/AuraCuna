@@ -1,0 +1,14 @@
+<!-- res/values/styles.xml -->
+<resources>
+    <!-- Define a global text appearance -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Other theme attributes -->
+        <item name="android:textViewStyle">@style/CustomTextViewStyle</item>
+    </style>
+
+    <!-- Define the custom text style -->
+    <style name="CustomTextViewStyle" parent="android:Widget.TextView">
+        <item name="android:fontFamily">@font/quicksand_variable_font_wght</item>
+        <!-- You can define other text attributes here, like textSize, textColor, etc. -->
+    </style>
+</resources>
