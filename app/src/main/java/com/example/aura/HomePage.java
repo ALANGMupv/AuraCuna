@@ -46,7 +46,7 @@ public class HomePage extends AppCompatActivity {
         TextView nombreTextView = findViewById(R.id.Campo_Nombre);
         // Obtener el nombre de usuario de la base de datos
         String userId = usuario.getUid();
-        DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("Users").child(userId).child("name");
+        DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("Users").child(userId).child("name"); //hola
 
         userRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
