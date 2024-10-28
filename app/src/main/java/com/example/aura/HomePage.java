@@ -120,7 +120,7 @@ public class HomePage extends AppCompatActivity {
         // Obtener el usuario actual
         FirebaseUser usuario = FirebaseAuth.getInstance().getCurrentUser();
         String userId = usuario.getUid();
-        DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("Users").child(userId).child("username");
+        DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("Users").child(userId).child("name");
 
         // Configurar botones del dialog
         builder.setPositiveButton("Guardar", (dialog, which) -> {
