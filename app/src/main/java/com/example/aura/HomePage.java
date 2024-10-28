@@ -32,7 +32,6 @@ import com.google.firebase.database.ValueEventListener;
 
 public class HomePage extends AppCompatActivity {
 
-    Button perfilButton; // Botón que llevará al perfil
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +46,7 @@ public class HomePage extends AppCompatActivity {
         TextView nombreTextView = findViewById(R.id.Campo_Nombre);
         // Obtener el nombre de usuario de la base de datos
         String userId = usuario.getUid();
-        DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("Users").child(userId).child("username");
+        DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("Users").child(userId).child("name");
 
         userRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
