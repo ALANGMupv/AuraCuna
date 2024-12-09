@@ -100,5 +100,11 @@ public class ReestablecerContraseñaActivity extends AppCompatActivity {
             }
         });
     }
+
+    public void inicioSesion(View v) {
+        Intent intent = new Intent(ReestablecerContraseñaActivity.this, LoginActivity.class);
+        startActivity(intent);
+        finish();
+    }
 }
 

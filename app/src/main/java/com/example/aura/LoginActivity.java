@@ -142,8 +142,11 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void autentificarGoogle(View v) {
-        Intent i = googleSignInClient.getSignInIntent();
-        startActivityForResult(i, RC_GOOGLE_SIGN_IN);
+        googleSignInClient.revokeAccess().addOnCompleteListener(this, task -> {
+            // Después de revocar acceso, inicia el flujo de inicio de sesión con Google
+            Intent i = googleSignInClient.getSignInIntent();
+            startActivityForResult(i, RC_GOOGLE_SIGN_IN);
+        });
     }
 
     @Override public void onActivityResult(int requestCode, int resultCode,
