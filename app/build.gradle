@@ -45,7 +45,19 @@ dependencies {
     implementation("com.google.firebase:firebase-auth")
     implementation("com.google.android.gms:play-services-auth:21.0.0")
     implementation 'com.google.firebase:firebase-auth:23.1.0'
-
     // Añade esta línea
     implementation 'com.firebaseui:firebase-ui-auth:8.0.0' // Asegúrate de usar la última versión
+    implementation platform('com.google.firebase:firebase-bom:33.5.1')
+    implementation("com.google.firebase:firebase-firestore:25.1.1")
+    implementation 'com.google.android.gms:play-services-auth:20.5.0'
+    implementation 'com.github.bumptech.glide:glide:4.12.0'
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
+    implementation 'com.google.android.gms:play-services-base:18.1.0'
+    implementation 'com.google.android.gms:play-services-oss-licenses:17.0.0' // Si usas licencias abiertas
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.12.0'
+
+
+
 }
+
+

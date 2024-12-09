@@ -3,7 +3,7 @@
     "project_number": "1006456212682",
     "firebase_url": "https://aura-1e33f-default-rtdb.firebaseio.com",
     "project_id": "aura-1e33f",
-    "storage_bucket": "aura-1e33f.appspot.com"
+    "storage_bucket": "aura-1e33f.firebasestorage.app"
   },
   "client": [
     {
@@ -15,11 +15,43 @@
       },
       "oauth_client": [
         {
+          "client_id": "1006456212682-4astqhvogpveu7914sqirdfcecrjs0bt.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.aura",
+            "certificate_hash": "3433a342d515671795735a5c3720a8bb08d6dd37"
+          }
+        },
+        {
           "client_id": "1006456212682-oikq1chql5jdrbv0eb7q1dpifcp1coqb.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.example.aura",
             "certificate_hash": "f45de4733001a237825c1690d59c6efd68f708be"
+          }
+        },
+        {
+          "client_id": "1006456212682-onllhbqo74n7u53d3ufnqrlfthcm0fdg.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.aura",
+            "certificate_hash": "ead63a2a70256f5ee696fa71d69082dd5e342cb3"
+          }
+        },
+        {
+          "client_id": "1006456212682-opkdrhtdt0krlsm8fdsosldf7v0vbd3c.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.aura",
+            "certificate_hash": "5447d3124cb320efe63d519f0fcb22a291427195"
+          }
+        },
+        {
+          "client_id": "1006456212682-u102rap1pq27ngj6okp0q5f0u7f0m8ql.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.aura",
+            "certificate_hash": "cba3849504fa8e1aa655cebdee8e2132ee088c36"
           }
         },
         {

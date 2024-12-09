@@ -5,7 +5,7 @@ import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
 
 public class Mqtt implements MqttCallback {
 //Commit
-    private static final String BROKER = "tcp://192.168.1.139:1883"; // Dirección del broker MQTT en la Raspberry Pi
+    private static final String BROKER = "tcp://192.168.87.90:1883"; // Dirección del broker MQTT en la Raspberry Pi
     private static final String CLIENT_ID = "RaspberryPiClient";   // ID del cliente MQTT
     private static final String TOPIC = "cuna/datos";              // Tópico al que nos suscribimos
     private static final int QOS = 1;                              // Nivel de calidad del servicio (QoS)

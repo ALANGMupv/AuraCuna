@@ -2,9 +2,10 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="azul_nofondo">#202345</color>
-    <color name="azul_fondo">#191C38</color>
-    <color name="gris">#878787</color>
-    <color name="blanco_raro">#D7D7D7</color>
-    <color name="amarillo">#969301</color>
+    <color name="amarillo">#C8CA52</color>
+    <color name="gris">#D7D7D7</color>
+    <color name="gris_oscuro">#878787</color>
+    <color name="azul_claro">#202345</color>
+    <color name="azul_oscuro">#191C38</color>
+    <color name="teal_700">#00796B</color>
 </resources>

@@ -5,10 +5,11 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:onClick="cerrarSesion"
     tools:context=".MainActivity">
 
     <TextView
-        android:id="@+id/textView4"
+        android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Hello World!"
@@ -16,5 +17,39 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/Configuración"
+        android:layout_width="280dp"
+        android:layout_height="55dp"
+        android:backgroundTint="#2F3C62"
+        android:fontFamily="@font/quicksand"
+        android:onClick="configuracion"
+        android:paddingBottom="10dp"
+        android:text="Configuración"
+        android:textAlignment="center"
+        android:textColor="#FFFFFF"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:cornerRadius="12dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="280dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/quicksand"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:cornerRadius="12dp"
+        android:backgroundTint="#2F3C62"
+        android:text="Estadisticas"
+        app:layout_constraintEnd_toEndOf="@+id/Configuración"
+        app:layout_constraintStart_toStartOf="@+id/Configuración"
+        app:layout_constraintTop_toBottomOf="@+id/Configuración" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -35,7 +35,7 @@ public class TwitterActivity extends MainActivity {
                             new OnSuccessListener<AuthResult>() {
                                 @Override
                                 public void onSuccess(AuthResult authResult) {
-                                    startActivity(new Intent(TwitterActivity.this, HomePage.class));
+                                    startActivity(new Intent(TwitterActivity.this, MainActivity.class));
                                     Toast.makeText(TwitterActivity.this, "Login Successful",  Toast.LENGTH_SHORT).show();
                                 }
                             })
@@ -54,7 +54,7 @@ public class TwitterActivity extends MainActivity {
                             new OnSuccessListener<AuthResult>() {
                                 @Override
                                 public void onSuccess(AuthResult authResult) {
-                                    startActivity(new Intent(TwitterActivity.this, HomePage.class));
+                                    startActivity(new Intent(TwitterActivity.this, MainActivity.class));
                                     Toast.makeText(TwitterActivity.this, "Login Successful",  Toast.LENGTH_SHORT).show();
                                 }
                             })

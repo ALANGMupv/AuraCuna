@@ -1,4 +1,5 @@
 <resources>
-    <string name="app_name" translatable="false">Aura</string>
-    <string name="default_web_client_id" translatable="false">1006456212682-oikq1chql5jdrbv0eb7q1dpifcp1coqb.apps.googleusercontent.com</string>
+    <string name="app_name">ProyectoFirebase</string>
+    <string name="default_web_client_id" translatable="false">349702169144-d8tqo5khpbqruirna51vtsndgc43nqf4.apps.googleusercontent.com</string>
+
 </resources>
