@@ -1,7 +1,5 @@
-plugins {
-    id 'java-library'
-    id 'application'
-}
+apply plugin: 'java'
+apply plugin: 'application'
 
 java {
     sourceCompatibility = JavaVersion.VERSION_1_8
@@ -10,6 +8,8 @@ java {
 
 dependencies {
     implementation 'org.eclipse.paho:org.eclipse.paho.client.mqttv3:1.2.5'
+    implementation 'com.google.firebase:firebase-admin:8.0.1'
+    implementation 'com.google.code.gson:gson:2.8.8'
 }
 
 application {
