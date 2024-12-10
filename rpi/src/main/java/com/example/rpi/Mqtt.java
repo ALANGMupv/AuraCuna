@@ -24,6 +24,7 @@ public class Mqtt implements MqttCallback {
     private Firestore db;
     private MqttClient client;
 
+    // hola, estoy usando git
     public Mqtt() {
         try {
             // Inicializar Firebase
