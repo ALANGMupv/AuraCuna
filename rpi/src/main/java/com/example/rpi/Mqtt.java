@@ -1,3 +1,5 @@
+package com.example.rpi;
+
 import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.DocumentReference;
 import com.google.firebase.FirebaseApp;
@@ -25,7 +27,7 @@ public class Mqtt implements MqttCallback {
     public Mqtt() {
         try {
             // Inicializar Firebase
-            FileInputStream serviceAccount = new FileInputStream("rpi/src/main/res/aura.json");
+            FileInputStream serviceAccount = new FileInputStream("rpi/src/main/res/aura_clave.json");
             FirebaseOptions options = new FirebaseOptions.Builder()
                     .setCredentials(GoogleCredentials.fromStream(serviceAccount))
                     .setDatabaseUrl("https://aura-1e33f.firebaseio.com")
