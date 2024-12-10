@@ -35,6 +35,7 @@ public class RegistroActivity extends AppCompatActivity {
     private FirebaseFirestore db;
     private GoogleSignInClient googleSignInClient;
     private ProgressDialog dialogo;
+    private EditText etCorreo, etContraseña, etRepContraseña, etNombre, etApellido;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +49,10 @@ public class RegistroActivity extends AppCompatActivity {
         dialogo.setTitle("Autenticando...");
         dialogo.setMessage("Por favor espere...");
         dialogo.setCancelable(false);
+        etCorreo = findViewById(R.id.correo);
+        etContraseña = findViewById(R.id.contraseña);
+        etNombre = findViewById(R.id.nombre);
+        etApellido = findViewById(R.id.apellido);
 
         // Configuración de Google Sign-In
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -144,6 +149,44 @@ public class RegistroActivity extends AppCompatActivity {
         startActivity(intent);
         finish();
     }
+
+    public void verificaciónRegistro(View view) {
+        dialogo.show();
+        String correo = etCorreo.getText().toString().trim();
+        String contraseña = etContraseña.getText().toString().trim();
+
+        auth.createUserWithEmailAndPassword(correo, contraseña).addOnCompleteListener(this, task -> {
+            dialogo.dismiss();
+            if (task.isSuccessful()) {
+                FirebaseUser usuario = auth.getCurrentUser();
+                if (usuario != null) {
+                    // Llamada al método registrarUsuarioEnFirestore
+                    registrarUsuarioEnFirestore(usuario);
+
+                    // Llamada al método enviarCorreoVerificacion
+                    usuario.sendEmailVerification().addOnCompleteListener(emailTask -> {
+                        if (emailTask.isSuccessful()) {
+                            Snackbar.make(findViewById(R.id.contenedor), "Registro exitoso. Verifique su correo electrónico para activar su cuenta.", Snackbar.LENGTH_LONG).show();
+                            // Redirige al LoginActivity
+                            Intent intent = new Intent(RegistroActivity.this, LoginActivity.class);
+                            startActivity(intent);
+                            finish();
+                            // Cierra la sesión después del registro
+                            auth.signOut();
+
+                        } else {
+                            Snackbar.make(findViewById(R.id.contenedor), "Error al enviar correo de verificación: " + emailTask.getException().getMessage(), Snackbar.LENGTH_LONG).show();
+                        }
+                    });
+                }
+            } else {
+                Snackbar.make(findViewById(R.id.contenedor), "Error al crear cuenta: " + task.getException().getMessage(), Snackbar.LENGTH_LONG).show();
+            }
+        });
+    }
+
+
+
 }
 
 
