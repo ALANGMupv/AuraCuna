@@ -38,7 +38,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/luz"
         android:layout_width="280dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"

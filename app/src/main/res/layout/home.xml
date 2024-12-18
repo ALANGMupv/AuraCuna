@@ -67,7 +67,7 @@
             app:layout_constraintTop_toBottomOf="@+id/videoPlayer" />
 
         <Button
-            android:id="@+id/button2"
+            android:id="@+id/luz"
             style="@style/RoundedButton"
             android:layout_width="0dp"
             android:layout_height="80dp"
@@ -90,7 +90,7 @@
             android:drawableTop="@mipmap/ic_cuna"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/button2"
+            app:layout_constraintStart_toEndOf="@+id/luz"
             app:layout_constraintTop_toBottomOf="@+id/textMC" />
 
         <Button
@@ -100,8 +100,8 @@
             android:layout_height="80dp"
             android:layout_marginTop="16dp"
             android:drawableTop="@mipmap/ic_hum"
-            app:layout_constraintEnd_toEndOf="@+id/button2"
-            app:layout_constraintStart_toStartOf="@+id/button2"
+            app:layout_constraintEnd_toEndOf="@+id/luz"
+            app:layout_constraintStart_toStartOf="@+id/luz"
             app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
         <Button
@@ -113,7 +113,7 @@
             android:layout_marginTop="16dp"
             android:drawableTop="@mipmap/ic_mic"
             app:layout_constraintEnd_toEndOf="@+id/servo"
-            app:layout_constraintStart_toEndOf="@+id/button2"
+            app:layout_constraintStart_toEndOf="@+id/luz"
             app:layout_constraintTop_toBottomOf="@+id/textView6" />
 
         <Button
@@ -147,10 +147,10 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:text="Luz de cuna"
-            app:layout_constraintEnd_toEndOf="@+id/button2"
+            app:layout_constraintEnd_toEndOf="@+id/luz"
             app:layout_constraintHorizontal_bias="0.484"
-            app:layout_constraintStart_toStartOf="@+id/button2"
-            app:layout_constraintTop_toBottomOf="@+id/button2" />
+            app:layout_constraintStart_toStartOf="@+id/luz"
+            app:layout_constraintTop_toBottomOf="@+id/luz" />
 
         <TextView
             android:id="@+id/textView6"
