@@ -81,7 +81,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        // Verificar si el usuario ya está autenticado
+        // Veerificar si el usuario ya está autenticado
         verificaSiUsuarioValidado();
 
         //Google
