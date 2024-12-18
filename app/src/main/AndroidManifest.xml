@@ -31,6 +31,9 @@
             android:name=".RegistroActivity" />
 
         <activity
+            android:name=".TwitterActivity" />
+
+        <activity
             android:name=".ReestablecerContraseñaActivity" />
 
         <activity
