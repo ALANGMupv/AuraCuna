@@ -52,4 +52,14 @@
         app:layout_constraintStart_toStartOf="@+id/Configuración"
         app:layout_constraintTop_toBottomOf="@+id/Configuración" />
 
+    <Button
+        android:id="@+id/home"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:text="HOME"
+        app:layout_constraintBottom_toTopOf="@+id/Configuración"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

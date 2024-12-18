@@ -55,7 +55,7 @@ dependencies {
     implementation 'com.google.android.gms:play-services-base:18.1.0'
     implementation 'com.google.android.gms:play-services-oss-licenses:17.0.0' // Si usas licencias abiertas
     annotationProcessor 'com.github.bumptech.glide:compiler:4.12.0'
-
+    implementation 'com.google.android.exoplayer:exoplayer:2.19.0'
 }
 
 

@@ -40,6 +40,9 @@
             android:name=".PerfilActivity" />
         <activity android:name=".EstadisticasActivity" />
 
+        <activity android:name=".HomePage" />
+
+
 
         <meta-data
             android:name="preloaded_fonts"
