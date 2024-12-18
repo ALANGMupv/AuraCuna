@@ -43,7 +43,10 @@
             android:name=".PerfilActivity" />
         <activity android:name=".EstadisticasActivity" />
 
-        <activity android:name=".HomePage" />
+        <activity
+            android:name=".HomePage"
+            android:configChanges="orientation|screenSize"
+            android:exported="true" />
 
 
 

@@ -7,6 +7,7 @@
     android:fillViewport="true"
     tools:context=".HomePage">
 
+    <!-- Se han puesto ic_humedad provisionales porque no se encuentran los otros en esta versión de git -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/main"
         android:layout_width="match_parent"

@@ -65,7 +65,7 @@
         <item name="android:textColor">#FFFFFF</item>
         <item name="android:textStyle">bold</item>
         <item name="android:padding">12dp</item>
-        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:fontFamily">@font/quicksand</item>
         <item name="backgroundTint">@color/blanco_raro</item>
     </style>
 
@@ -74,8 +74,8 @@
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textColor">@color/gris</item>
-        <item name="android:textSize">14sp</item>
-        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:textSize">20dp</item>
+        <item name="android:fontFamily">@font/quicksand_bold</item>
         <item name="android:textStyle">bold</item>
     </style>
 
@@ -84,7 +84,15 @@
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textColor">@color/gris</item>
-        <item name="android:textSize">12sp</item>
-        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textSize">15dp</item>
+        <item name="android:fontFamily">@font/quicksand_medium</item>
     </style>
+
+    <style name="CustomSpinnerStyle" parent="Widget.AppCompat.Spinner">
+        <item name="android:background">@drawable/custom_spinner_background</item>
+        <item name="android:popupBackground">@drawable/custom_spinner_popup</item>
+        <item name="android:spinnerMode">dropdown</item>
+        <item name="android:textColor">@color/blanco_raro</item>
+    </style>
+
 </resources>
