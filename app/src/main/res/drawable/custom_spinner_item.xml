@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:textColor="@android:color/white"
+    android:padding="8dp"
+    android:gravity="center"
+    android:textSize="16sp"
+    android:fontFamily="@font/quicksand" />
+
+
+    <!-- val adapter = ArrayAdapter.createFromResource(
+        this,
+        R.array.spinner_items, // Tu array de elementos
+        R.layout.custom_spinner_item // Estilo del texto
+    )
+    adapter.setDropDownViewResource(R.layout.custom_spinner_dropdown_item)
+    spinner.adapter = adapter-->
