@@ -7,6 +7,7 @@
     android:fillViewport="true"
     tools:context=".HomePage">
 
+    <!-- Se han puesto ic_humedad provisionales porque no se encuentran los otros en esta versión de git -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/main"
         android:layout_width="match_parent"
@@ -71,7 +72,7 @@
             style="@style/SecondaryTextView"/>
 
         <Button
-            android:id="@+id/button2"
+            android:id="@+id/luz"
             style="@style/RoundedButton"
             android:layout_width="0dp"
             android:layout_height="80dp"
@@ -79,13 +80,13 @@
             android:layout_marginTop="20dp"
             android:layout_marginEnd="10dp"
             android:drawableTop="@mipmap/ic_luz"
-            app:layout_constraintEnd_toStartOf="@+id/button3"
+            app:layout_constraintEnd_toStartOf="@+id/servo"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textMC" />
 
         <Button
-            android:id="@+id/button3"
+            android:id="@+id/servo"
             style="@style/RoundedButton"
             android:layout_width="0dp"
             android:layout_height="80dp"
@@ -94,7 +95,7 @@
             android:drawableTop="@mipmap/ic_cuna"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/button2"
+            app:layout_constraintStart_toEndOf="@+id/luz"
             app:layout_constraintTop_toBottomOf="@+id/textMC" />
 
         <Button
@@ -104,8 +105,8 @@
             android:layout_height="80dp"
             android:layout_marginTop="16dp"
             android:drawableTop="@mipmap/ic_music"
-            app:layout_constraintEnd_toEndOf="@+id/button2"
-            app:layout_constraintStart_toStartOf="@+id/button2"
+            app:layout_constraintEnd_toEndOf="@+id/luz"
+            app:layout_constraintStart_toStartOf="@+id/luz"
             app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
         <Button
@@ -116,8 +117,8 @@
             android:layout_marginStart="10dp"
             android:layout_marginTop="16dp"
             android:drawableTop="@mipmap/ic_mic"
-            app:layout_constraintEnd_toEndOf="@+id/button3"
-            app:layout_constraintStart_toEndOf="@+id/button2"
+            app:layout_constraintEnd_toEndOf="@+id/servo"
+            app:layout_constraintStart_toEndOf="@+id/luz"
             app:layout_constraintTop_toBottomOf="@+id/textView6" />
 
         <Button
@@ -151,22 +152,21 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:text="Luz de cuna"
-            app:layout_constraintEnd_toEndOf="@+id/button2"
+            app:layout_constraintEnd_toEndOf="@+id/luz"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="@+id/button2"
-            app:layout_constraintTop_toBottomOf="@+id/button2"
-            style="@style/SecondaryTextView"/>
+            app:layout_constraintStart_toStartOf="@+id/luz"
+            app:layout_constraintTop_toBottomOf="@+id/luz"
+            style="@style/SecondaryTextView"/>/>
 
         <TextView
             android:id="@+id/textView6"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="10dp"
             android:text="Mecimiento de cuna"
-            app:layout_constraintEnd_toEndOf="@+id/button3"
-            app:layout_constraintStart_toStartOf="@+id/button3"
-            app:layout_constraintTop_toBottomOf="@+id/button3"
-            style="@style/SecondaryTextView"/>
+            app:layout_constraintEnd_toEndOf="@+id/servo"
+            app:layout_constraintStart_toStartOf="@+id/servo"
+            app:layout_constraintTop_toBottomOf="@+id/servo" />
 
         <TextView
             android:id="@+id/textView7"

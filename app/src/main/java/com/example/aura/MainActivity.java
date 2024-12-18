@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-        Button stats = findViewById(R.id.button2);
+        Button stats = findViewById(R.id.luz);
         stats.setOnClickListener(v -> {
             Intent intent = new Intent(MainActivity.this, EstadisticasActivity.class);
             startActivity(intent);
