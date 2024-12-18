@@ -75,13 +75,13 @@
             android:layout_marginTop="40dp"
             android:layout_marginEnd="10dp"
             android:drawableTop="@mipmap/ic_hum"
-            app:layout_constraintEnd_toStartOf="@+id/button3"
+            app:layout_constraintEnd_toStartOf="@+id/servo"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textMC" />
 
         <Button
-            android:id="@+id/button3"
+            android:id="@+id/servo"
             style="@style/RoundedButton"
             android:layout_width="0dp"
             android:layout_height="80dp"
@@ -112,7 +112,7 @@
             android:layout_marginStart="10dp"
             android:layout_marginTop="16dp"
             android:drawableTop="@mipmap/ic_mic"
-            app:layout_constraintEnd_toEndOf="@+id/button3"
+            app:layout_constraintEnd_toEndOf="@+id/servo"
             app:layout_constraintStart_toEndOf="@+id/button2"
             app:layout_constraintTop_toBottomOf="@+id/textView6" />
 
@@ -158,9 +158,9 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:text="Mecimiento de cuna"
-            app:layout_constraintEnd_toEndOf="@+id/button3"
-            app:layout_constraintStart_toStartOf="@+id/button3"
-            app:layout_constraintTop_toBottomOf="@+id/button3" />
+            app:layout_constraintEnd_toEndOf="@+id/servo"
+            app:layout_constraintStart_toStartOf="@+id/servo"
+            app:layout_constraintTop_toBottomOf="@+id/servo" />
 
         <TextView
             android:id="@+id/textView7"
