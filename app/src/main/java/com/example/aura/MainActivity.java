@@ -28,13 +28,17 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(MainActivity.this, EstadisticasActivity.class);
             startActivity(intent);
         });
+
+        Button home = findViewById(R.id.home);
+        home.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, HomePage.class);
+            startActivity(intent);
+        });
     }
 
     public void configuracion(View v) {
-
         Intent i = new Intent(this, ConfiguracionActivity.class);
         startActivity(i);
-
         finish();
     }
 }

@@ -40,8 +40,8 @@
             android:name=".PerfilActivity" />
         <activity android:name=".EstadisticasActivity" />
 
-        <activity
-            android:name=".TwitterActivity" />
+        <activity android:name=".HomePage" />
+
 
 
         <meta-data
