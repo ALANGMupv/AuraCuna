@@ -186,6 +186,11 @@ public class RegistroActivity extends AppCompatActivity {
     }
 
 
+    public void ir_a_inicio_sesion(View v) {
+        Intent intent = new Intent(RegistroActivity.this, LoginActivity.class);
+        startActivity(intent);
+        finish();
+    }
 
 }
 

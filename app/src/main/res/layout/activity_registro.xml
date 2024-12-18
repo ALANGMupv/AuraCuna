@@ -267,7 +267,7 @@
                 android:layout_marginTop="20dp"
                 android:layout_marginBottom="32dp"
                 android:fontFamily="@font/quicksand_bold"
-                android:onClick="inicioSesion"
+                android:onClick="ir_a_inicio_sesion"
                 android:text="Ya tengo una cuenta. Iniciar Sesión"
                 android:textColor="@color/azul_claro"
                 android:textSize="16sp"
