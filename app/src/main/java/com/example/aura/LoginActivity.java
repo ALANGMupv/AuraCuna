@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -50,7 +51,7 @@ public class LoginActivity extends AppCompatActivity {
     private TextInputLayout tilCorreo, tilContraseña;
     private ProgressDialog dialogo;
 
-
+    ImageView btnTwitter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,7 +69,19 @@ public class LoginActivity extends AppCompatActivity {
         dialogo.setMessage("Por favor espere...");
         dialogo.setCancelable(false);
 
-        // Verificar si el usuario ya está autenticado
+        //Login con Twitter
+        btnTwitter = findViewById(R.id.twitter);
+
+        btnTwitter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(LoginActivity.this, TwitterActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                startActivity(intent);
+            }
+        });
+
+        // Veerificar si el usuario ya está autenticado
         verificaSiUsuarioValidado();
 
         //Google
