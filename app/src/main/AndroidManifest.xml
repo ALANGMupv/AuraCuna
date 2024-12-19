@@ -45,7 +45,10 @@
 
         <activity
             android:name=".PerfilActivity" />
+
         <activity android:name=".EstadisticasActivity" />
+
+        <activity android:name=".RecyclerActivity" />
 
         <activity
             android:name=".HomePage"
