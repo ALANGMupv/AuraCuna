@@ -98,7 +98,13 @@ public class RegistroActivity extends AppCompatActivity {
             if (task.isSuccessful()) {
                 FirebaseUser usuario = auth.getCurrentUser();
                 if (usuario != null) {
-                    verificarRegistroEnFirestore(usuario);
+                    // Obtener nombre y apellidos del GoogleSignInAccount
+                    String nombreCompleto = account.getDisplayName();
+                    String[] nombreApellidos = nombreCompleto != null ? nombreCompleto.split(" ", 2) : new String[]{"Nombre desconocido", "Apellido desconocido"};
+                    String nombre = nombreApellidos[0];
+                    String apellidos = nombreApellidos.length > 1 ? nombreApellidos[1] : "Apellido desconocido";
+
+                    verificarRegistroEnFirestore(usuario, nombre, apellidos);
                 }
             } else {
                 dialogo.dismiss();
@@ -107,7 +113,8 @@ public class RegistroActivity extends AppCompatActivity {
         });
     }
 
-    private void verificarRegistroEnFirestore(FirebaseUser usuario) {
+
+    private void verificarRegistroEnFirestore(FirebaseUser usuario, String nombre, String apellidos) {
         String correo = usuario.getEmail();
         if (correo == null) {
             dialogo.dismiss();
@@ -122,11 +129,7 @@ public class RegistroActivity extends AppCompatActivity {
                 Snackbar.make(findViewById(R.id.contenedor), "Inicio de sesión exitoso.", Snackbar.LENGTH_LONG).show();
                 redirigirAMainActivity();
             } else {
-                // Usuario no registrado en Firestore, registrarlo
-                String nombre = "Nombre desconocido";  // Aquí deberías obtener el nombre desde algún campo o variable
-                String apellidos = "Apellido desconocido";  // Aquí deberías obtener los apellidos también
-
-                // Llamar a registrarUsuarioEnFirestore con los tres parámetros
+                // Usuario no registrado en Firestore, registrarlo con nombre y apellidos
                 registrarUsuarioEnFirestore(usuario, nombre, apellidos);
             }
         }).addOnFailureListener(e -> {
@@ -141,8 +144,9 @@ public class RegistroActivity extends AppCompatActivity {
 
         Map<String, Object> datosUsuario = new HashMap<>();
         datosUsuario.put("nombre", nombre != null ? nombre : "Nombre desconocido");
-        datosUsuario.put("apellido", apellidos != null ? apellidos : "Apellido desconocido"); // Puedes obtener más datos si es necesario
+        datosUsuario.put("apellido", apellidos != null ? apellidos : "Apellido desconocido");
         datosUsuario.put("correo", correo);
+        datosUsuario.put("cunaAsociada", "cuna1");
 
         db.collection("usuarios").document(userId).set(datosUsuario).addOnSuccessListener(aVoid -> {
             Snackbar.make(findViewById(R.id.contenedor), "Usuario registrado exitosamente.", Snackbar.LENGTH_LONG).show();
