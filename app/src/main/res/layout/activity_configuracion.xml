@@ -6,127 +6,128 @@
     android:layout_height="match_parent"
     android:background="@color/azul_oscuro">
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/contenedor"
+    <ScrollView
+        android:id="@+id/scrollView"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginBottom="90dp"
-        app:cardBackgroundColor="@color/gris"
-        app:cardCornerRadius="30dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:fillViewport="true"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/profileLayout"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintEnd_toEndOf="parent">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <androidx.cardview.widget.CardView
+            android:id="@+id/contenedor"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.5">
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="24dp"
+            android:layout_marginBottom="90dp"
+            app:cardBackgroundColor="@color/gris"
+            app:cardCornerRadius="30dp">
 
-            <ImageView
-                android:id="@+id/imageView"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:layout_marginTop="32dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/configuracion_icono"
-                tools:srcCompat="@drawable/configuracion_icono" />
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-            <TextView
-                android:id="@+id/textView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:fontFamily="@font/quicksand_bold"
-                android:text="Configuración"
-                android:textColor="@color/azul_claro"
-                android:textSize="28dp"
-                app:layout_constraintEnd_toEndOf="@+id/imageView"
-                app:layout_constraintStart_toStartOf="@+id/imageView"
-                app:layout_constraintTop_toBottomOf="@+id/imageView" />
+                <ImageView
+                    android:id="@+id/imageView"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_marginTop="32dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/configuracion_icono"
+                    tools:srcCompat="@drawable/configuracion_icono" />
 
-            <TextView
-                android:id="@+id/perfil"
-                android:layout_width="wrap_content"
-                android:layout_height="40dp"
-                android:layout_marginTop="40dp"
-                android:fontFamily="@font/quicksand_bold"
-                android:onClick="perfilUsuario"
-                android:text="Perfil de Usuario"
-                android:textSize="20sp"
-                app:layout_constraintEnd_toEndOf="@+id/textView"
-                app:layout_constraintStart_toStartOf="@+id/textView"
-                app:layout_constraintTop_toBottomOf="@+id/textView" />
+                <TextView
+                    android:id="@+id/textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:fontFamily="@font/quicksand_bold"
+                    android:text="Configuración"
+                    android:textColor="@color/azul_claro"
+                    android:textSize="28sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/imageView" />
 
-            <Button
-                android:id="@+id/cerrar_sesion"
-                android:layout_width="0dp"
-                android:layout_height="55dp"
-                android:layout_marginStart="32dp"
-                android:layout_marginEnd="32dp"
-                android:layout_marginBottom="32dp"
-                android:backgroundTint="#2F3C62"
-                android:fontFamily="@font/quicksand"
-                android:onClick="cerrarSesion"
-                android:paddingBottom="10dp"
-                android:text="Cerrar Sesión"
-                android:textAlignment="center"
-                android:textColor="#FFFFFF"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                app:cornerRadius="12dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
+                <TextView
+                    android:id="@+id/perfil"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="40dp"
+                    android:fontFamily="@font/quicksand_bold"
+                    android:onClick="perfilUsuario"
+                    android:text="Perfil de Usuario"
+                    android:textSize="20sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/textView" />
 
-            <ImageView
-                android:id="@+id/imageView3"
-                android:layout_width="45dp"
-                android:layout_height="45dp"
-                android:onClick="regresar"
-                app:layout_constraintBottom_toBottomOf="@+id/imageView"
-                app:layout_constraintEnd_toStartOf="@+id/imageView"
-                app:layout_constraintHorizontal_bias="0.164"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.477"
-                app:srcCompat="@drawable/flechavolver_icono" />
+                <Button
+                    android:id="@+id/cerrar_sesion"
+                    android:layout_width="0dp"
+                    android:layout_height="55dp"
+                    android:layout_marginStart="32dp"
+                    android:layout_marginEnd="32dp"
+                    android:layout_marginBottom="32dp"
+                    android:backgroundTint="#2F3C62"
+                    android:fontFamily="@font/quicksand"
+                    android:onClick="cerrarSesion"
+                    android:text="Cerrar Sesión"
+                    android:textAlignment="center"
+                    android:textColor="#FFFFFF"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
 
-            <TextView
-                android:id="@+id/tv_dispositivos"
-                android:layout_width="wrap_content"
-                android:layout_height="40dp"
-                android:layout_marginTop="24dp"
-                android:fontFamily="@font/quicksand_bold"
-                android:text="Dispositivos"
-                android:textSize="20sp"
-                app:layout_constraintEnd_toEndOf="@+id/perfil"
-                app:layout_constraintStart_toStartOf="@+id/perfil"
-                app:layout_constraintTop_toBottomOf="@+id/perfil" />
+                <ImageView
+                    android:id="@+id/imageView3"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:layout_marginTop="20dp"
+                    android:onClick="regresar"
+                    app:layout_constraintBottom_toTopOf="@+id/imageView"
+                    app:layout_constraintEnd_toStartOf="@id/imageView"
+                    app:layout_constraintHorizontal_bias="0.164"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/flechavolver_icono" />
 
-            <TextView
-                android:id="@+id/tv_acerca_de"
-                android:layout_width="wrap_content"
-                android:layout_height="40dp"
-                android:layout_marginTop="24dp"
-                android:fontFamily="@font/quicksand_bold"
-                android:text="Acerca de"
-                android:textSize="20sp"
-                app:layout_constraintEnd_toEndOf="@+id/tv_dispositivos"
-                app:layout_constraintStart_toStartOf="@+id/tv_dispositivos"
-                app:layout_constraintTop_toBottomOf="@+id/tv_dispositivos" />
+                <TextView
+                    android:id="@+id/tv_dispositivos"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:fontFamily="@font/quicksand_bold"
+                    android:text="Dispositivos"
+                    android:textSize="20sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/perfil" />
 
+                <TextView
+                    android:id="@+id/tv_acerca_de"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:fontFamily="@font/quicksand_bold"
+                    android:text="Acerca de"
+                    android:textSize="20sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_dispositivos" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.cardview.widget.CardView>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.cardview.widget.CardView>
+    </ScrollView>
+
     <include
         android:id="@+id/profileLayout"
         layout="@layout/activity_profile"
@@ -135,5 +136,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/contenedor" />
+        app:layout_constraintTop_toBottomOf="@id/scrollView" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
