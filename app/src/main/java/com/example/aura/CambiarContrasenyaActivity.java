@@ -34,7 +34,7 @@ public class CambiarContrasenyaActivity extends AppCompatActivity {
         DisplayMetrics metrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(metrics);
         int width = (int) (metrics.widthPixels * 0.9);
-        int height = (int) (metrics.heightPixels * 0.65);
+        int height = (int) (metrics.heightPixels * 0.75);
         getWindow().setLayout(width, height);
 
         // Referencias a los componentes de la vista

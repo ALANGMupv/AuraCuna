@@ -32,7 +32,7 @@ public class EditarDatosPersonalesActivity extends AppCompatActivity {
         DisplayMetrics metrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(metrics);
         int width = (int) (metrics.widthPixels * 0.9);
-        int height = (int) (metrics.heightPixels * 0.65);
+        int height = (int) (metrics.heightPixels * 0.75);
         getWindow().setLayout(width, height);
 
         cerrarBoton = findViewById(R.id.btn_cancelar);

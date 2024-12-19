@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF">
+
+
+    <EditText
+        android:id="@+id/et_nuevo_nombre"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:ems="10"
+        android:fontFamily="@font/quicksand_bold"
+        android:hint="Introduce tu nombre"
+        android:inputType="text"
+        app:layout_constraintEnd_toStartOf="@+id/btn_confirmar"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView12" />
+
+    <EditText
+        android:id="@+id/et_nuevos_apellidos"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:fontFamily="@font/quicksand_bold"
+        android:hint="Introduce tus apellidos"
+        android:inputType="text"
+        app:layout_constraintEnd_toEndOf="@+id/et_nuevo_nombre"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/et_nuevo_nombre"
+        app:layout_constraintTop_toBottomOf="@+id/textView10" />
+
+    <TextView
+        android:id="@+id/textView11"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/quicksand_bold"
+        android:text="Nombre:"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/et_nuevo_nombre"
+        app:layout_constraintStart_toStartOf="@+id/et_nuevo_nombre" />
+
+    <TextView
+        android:id="@+id/textView10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/quicksand_bold"
+        android:text="Apellidos:"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/et_nuevos_apellidos"
+        app:layout_constraintTop_toBottomOf="@+id/et_nuevo_nombre" />
+
+    <Button
+        android:id="@+id/btn_confirmar"
+        android:layout_width="0dp"
+        android:layout_height="55dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:backgroundTint="#2F3C62"
+        android:text="Confirmar"
+        android:textColor="#FFFFFF"
+        android:textSize="20sp"
+        android:textStyle="normal"
+        app:cornerRadius="12dp"
+        app:layout_constraintBottom_toBottomOf="@+id/et_nuevo_nombre"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/et_nuevo_nombre"
+        app:layout_constraintTop_toTopOf="@+id/et_nuevo_nombre" />
+
+    <Button
+        android:id="@+id/btn_cancelar"
+        android:layout_width="0dp"
+        android:layout_height="55dp"
+        android:backgroundTint="#2F3C62"
+        android:text="Cancelar"
+        android:textColor="#FFFFFF"
+        android:textSize="20sp"
+        android:textStyle="normal"
+        app:cornerRadius="12dp"
+        app:layout_constraintBottom_toBottomOf="@+id/et_nuevos_apellidos"
+        app:layout_constraintEnd_toEndOf="@+id/btn_confirmar"
+        app:layout_constraintStart_toStartOf="@+id/btn_confirmar"
+        app:layout_constraintTop_toTopOf="@+id/et_nuevos_apellidos" />
+
+    <TextView
+        android:id="@+id/textView12"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/quicksand_bold"
+        android:text="Introduce solo los datos que quieras modificar."
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
