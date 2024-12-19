@@ -1,6 +1,5 @@
 package com.example.aura;
 
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -52,6 +51,19 @@ public class ConfiguracionActivity extends AppCompatActivity {
                 lanzarAcercaDe(view);
             }
         });
+
+
+        // Recycler view
+        TextView dispositivos = findViewById(R.id.tv_dispositivos);
+        dispositivos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Acción al hacer clic
+                Intent intent = new Intent(getApplicationContext(), RecyclerActivity.class);
+                startActivity(intent);
+            }
+        });
+
     }
 
     public void perfilUsuario(View v) {
