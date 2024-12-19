@@ -10,25 +10,32 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+import androidx.appcompat.app.AlertDialog;
 
 
 import androidx.appcompat.app.AppCompatActivity;
 
 public class PerfilActivity extends AppCompatActivity {
 
+    private static final int REQUEST_CODE_EDITAR_DATOS = 1;
+
     private FirebaseAuth auth;
     private FirebaseFirestore db;
     private ImageView fotoUsuario;
     private TextView tvNombre, tvApellido, tvCorreo;
+    private Button editarDatosPersonales, cambioContrasenya;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_perfil);
 
+        cambioContrasenya = findViewById(R.id.cambiar_contrasenya);
+        editarDatosPersonales = findViewById(R.id.editar_datos);
 
         auth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
@@ -38,7 +45,33 @@ public class PerfilActivity extends AppCompatActivity {
         tvApellido = findViewById(R.id.tv_apellido);
         tvCorreo = findViewById(R.id.tv_correo);
 
+        cargarDatosUsuario();
 
+        editarDatosPersonales.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                lanzarEditarDatosPersonales(view);
+            }
+        });
+
+        cambioContrasenya.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                lanzarCambioContrasenya(view);
+            }
+        });
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        cargarDatosUsuario();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         cargarDatosUsuario();
     }
 
@@ -76,7 +109,6 @@ public class PerfilActivity extends AppCompatActivity {
                         }
                     })
                     .addOnFailureListener(e -> {
-                        // Manejo de errores
                         Toast.makeText(this, "Error al cargar datos", Toast.LENGTH_SHORT).show();
                     });
         } else {
@@ -89,6 +121,33 @@ public class PerfilActivity extends AppCompatActivity {
         Intent i = new Intent(this, ConfiguracionActivity.class);
         startActivity(i);
         finish();
+    }
+
+    public void lanzarEditarDatosPersonales(View view){
+        Intent i = new Intent(this, EditarDatosPersonalesActivity.class);
+        startActivity(i);
+    }
+
+    public void lanzarCambioContrasenya(View view){
+        Intent i = new Intent(this, CambiarContrasenyaActivity.class);
+        startActivity(i);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == REQUEST_CODE_EDITAR_DATOS && resultCode == RESULT_OK) {
+            // Recibir los datos actualizados
+            String nombre = data.getStringExtra("nombre");
+            String apellidos = data.getStringExtra("apellidos");
+
+            // Actualizar los TextViews con los nuevos datos
+            if (nombre != null && apellidos != null) {
+                tvNombre.setText(nombre);
+                tvApellido.setText(apellidos);
+            }
+        }
     }
 
 }

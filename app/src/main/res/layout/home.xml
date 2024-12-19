@@ -116,17 +116,17 @@
                 app:layout_constraintStart_toStartOf="@+id/luz"
                 app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
-            <Button
-                android:id="@+id/button5"
-                style="@style/RoundedButton"
-                android:layout_width="0dp"
-                android:layout_height="80dp"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="16dp"
-                android:drawableTop="@mipmap/ic_mic"
-                app:layout_constraintEnd_toEndOf="@+id/servo"
-                app:layout_constraintStart_toEndOf="@+id/luz"
-                app:layout_constraintTop_toBottomOf="@+id/textView6" />
+        <Button
+            android:id="@+id/button5"
+            style="@style/RoundedButton"
+            android:layout_width="0dp"
+            android:layout_height="80dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="16dp"
+            android:drawableTop="@mipmap/ic_mic"
+            app:layout_constraintEnd_toEndOf="@+id/servo"
+            app:layout_constraintStart_toEndOf="@+id/luz"
+            app:layout_constraintTop_toBottomOf="@+id/apellidos" />
 
             <Button
                 android:id="@+id/button6"
@@ -165,16 +165,16 @@
                 app:layout_constraintTop_toBottomOf="@+id/luz"
                 style="@style/SecondaryTextView" />
 
-            <TextView
-                android:id="@+id/textView6"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:text="Mecimiento de cuna"
-                app:layout_constraintEnd_toEndOf="@+id/servo"
-                app:layout_constraintStart_toStartOf="@+id/servo"
-                app:layout_constraintTop_toBottomOf="@+id/servo"
-                style="@style/SecondaryTextView" />
+        <TextView
+            android:id="@+id/apellidos"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="Mecimiento de cuna"
+            app:layout_constraintEnd_toEndOf="@+id/servo"
+            app:layout_constraintStart_toStartOf="@+id/servo"
+            app:layout_constraintTop_toBottomOf="@+id/servo"
+            style="@style/SecondaryTextView"/>
 
             <TextView
                 android:id="@+id/textView7"

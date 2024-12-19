@@ -66,22 +66,13 @@
                 app:layout_constraintStart_toStartOf="@+id/textView"
                 app:layout_constraintTop_toBottomOf="@+id/textView" />
 
-            <TextView
-                android:id="@+id/textView6"
-                android:layout_width="wrap_content"
-                android:layout_height="40dp"
-                android:layout_marginTop="16dp"
-                android:fontFamily="@font/quicksand_bold"
-                android:text="Dispositivos "
-                android:textSize="20sp"
-                app:layout_constraintEnd_toEndOf="@+id/perfil"
-                app:layout_constraintStart_toStartOf="@+id/perfil"
-                app:layout_constraintTop_toBottomOf="@+id/perfil" />
-
             <Button
                 android:id="@+id/cerrar_sesion"
-                android:layout_width="280dp"
+                android:layout_width="0dp"
                 android:layout_height="55dp"
+                android:layout_marginStart="32dp"
+                android:layout_marginEnd="32dp"
+                android:layout_marginBottom="32dp"
                 android:backgroundTint="#2F3C62"
                 android:fontFamily="@font/quicksand"
                 android:onClick="cerrarSesion"
@@ -93,23 +84,8 @@
                 android:textStyle="bold"
                 app:cornerRadius="12dp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@+id/acerca_de"
-                app:layout_constraintHorizontal_bias="0.504"
-                app:layout_constraintStart_toStartOf="@+id/acerca_de"
-                app:layout_constraintTop_toBottomOf="@+id/acerca_de"
-                app:layout_constraintVertical_bias="0.817" />
-
-            <TextView
-                android:id="@+id/acerca_de"
-                android:layout_width="wrap_content"
-                android:layout_height="40dp"
-                android:layout_marginTop="16dp"
-                android:fontFamily="@font/quicksand_bold"
-                android:text="Acerca de"
-                android:textSize="20sp"
-                app:layout_constraintEnd_toEndOf="@+id/textView6"
-                app:layout_constraintStart_toStartOf="@+id/textView6"
-                app:layout_constraintTop_toBottomOf="@+id/textView6" />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
 
             <ImageView
                 android:id="@+id/imageView3"
@@ -123,6 +99,30 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.477"
                 app:srcCompat="@drawable/flechavolver_icono" />
+
+            <TextView
+                android:id="@+id/tv_dispositivos"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_marginTop="24dp"
+                android:fontFamily="@font/quicksand_bold"
+                android:text="Dispositivos"
+                android:textSize="20sp"
+                app:layout_constraintEnd_toEndOf="@+id/perfil"
+                app:layout_constraintStart_toStartOf="@+id/perfil"
+                app:layout_constraintTop_toBottomOf="@+id/perfil" />
+
+            <TextView
+                android:id="@+id/tv_acerca_de"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_marginTop="24dp"
+                android:fontFamily="@font/quicksand_bold"
+                android:text="Acerca de"
+                android:textSize="20sp"
+                app:layout_constraintEnd_toEndOf="@+id/tv_dispositivos"
+                app:layout_constraintStart_toStartOf="@+id/tv_dispositivos"
+                app:layout_constraintTop_toBottomOf="@+id/tv_dispositivos" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
