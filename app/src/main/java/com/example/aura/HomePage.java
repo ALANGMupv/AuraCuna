@@ -18,6 +18,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 
 import org.eclipse.paho.client.mqttv3.MqttClient;
 import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
@@ -43,6 +47,9 @@ public class HomePage extends AppCompatActivity {
 
     private static final String CHANNEL_ID = "MQTT_Notifications";
 
+    private Button button6;  // Botón para la temperatura
+    private Button button7;  // Botón para la humedad
+
     @SuppressLint("ResourceType")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +58,8 @@ public class HomePage extends AppCompatActivity {
 
         buttonServo = findViewById(R.id.servo);
         buttonLuz = findViewById(R.id.luz);
+        button6 = findViewById(R.id.button6); // Botón de Temperatura
+        button7 = findViewById(R.id.button7); // Botón de Humedad
 
         buttonServo.setOnClickListener(v -> toggleServo());
         buttonLuz.setOnClickListener(v -> toggleLuz());
@@ -81,6 +90,30 @@ public class HomePage extends AppCompatActivity {
             startActivity(configuracion);
         });
 
+        obtenerDatosTemperaturaYHumedad();
+    }
+
+    private void obtenerDatosTemperaturaYHumedad() {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("Cunas")
+                .document("cuna1")
+                .addSnapshotListener(new EventListener<DocumentSnapshot>() {
+                    @Override
+                    public void onEvent(DocumentSnapshot documentSnapshot, FirebaseFirestoreException e) {
+                        if (e != null) {
+                            Log.w("Firestore", "Error al escuchar los datos.", e);
+                            return;
+                        }
+                        if (documentSnapshot != null && documentSnapshot.exists()) {
+                            double temperatura = documentSnapshot.getDouble("temperatura");
+                            double humedad = documentSnapshot.getDouble("humedad");
+
+                            // Actualizar los botones con los valores de temperatura y humedad
+                            button6.setText(temperatura + "°C");
+                            button7.setText(humedad + "%");
+                        }
+                    }
+                });
     }
 
     private void setupMQTT() {
