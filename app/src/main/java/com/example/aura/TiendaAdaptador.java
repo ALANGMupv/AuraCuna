@@ -1,6 +1,7 @@
 package com.example.aura;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -47,6 +48,8 @@ public class TiendaAdaptador extends RecyclerView.Adapter<TiendaAdaptador.ViewHo
                 intent.setData(Uri.parse(tiendaObj.getUrlCompra()));
                 itemView.getContext().startActivity(intent);
             });
+
+
         }
     }
 
@@ -61,6 +64,10 @@ public class TiendaAdaptador extends RecyclerView.Adapter<TiendaAdaptador.ViewHo
     public void onBindViewHolder(ViewHolder holder, int position) {
         Tienda tiendaObj = listaTiendas.get(position);
         holder.personaliza(tiendaObj);
+
+        if (position%2 == 0){
+            holder.itemView.setBackgroundColor(Color.LTGRAY);
+        }
     }
 
     @Override
