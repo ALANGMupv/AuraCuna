@@ -1,221 +1,238 @@
-<?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fillViewport="true"
     tools:context=".HomePage">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/main"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/azul_oscuro">
 
-        <Spinner
-            android:id="@+id/customSpinner"
-            style="@style/CustomSpinnerStyle"
-            android:layout_width="0dp"
-            android:layout_height="45dp"
-            android:layout_marginTop="24dp"
-            android:drawableEnd="@drawable/custom_spinner_arrow"
-            android:paddingLeft="24dp"
-            android:paddingRight="24dp"
-            app:layout_constraintBottom_toTopOf="@+id/videoPlayer"
-            app:layout_constraintEnd_toStartOf="@+id/botonNotif"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="@+id/videoPlayer"
-            app:layout_constraintTop_toTopOf="parent" />
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/profileLayout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
 
-        <com.google.android.exoplayer2.ui.PlayerView
-            android:id="@+id/videoPlayer"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginTop="10dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHeight_percent="0.3"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/customSpinner"
-            app:layout_constraintWidth_percent="0.8"
-            app:use_controller="true" />
-
-
-        <Button
-            android:id="@+id/botonNotif"
-            android:layout_width="wrap_content"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/main"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:background="@android:color/transparent"
-            android:drawableTop="@mipmap/ic_noti"
-            android:drawablePadding="0dp"
-            android:gravity="center"
-            android:padding="0dp"
-            app:layout_constraintBottom_toTopOf="@+id/videoPlayer"
-            app:layout_constraintEnd_toEndOf="@+id/videoPlayer"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/customSpinner"
-            app:layout_constraintTop_toTopOf="@+id/customSpinner"
-            app:layout_constraintVertical_bias="0.5" />
+            android:background="@color/azul_oscuro">
 
-        <TextView
-            android:id="@+id/textMC"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:text="Monitoreo de cuna"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/videoPlayer"
-            style="@style/SecondaryTextView"/>
 
-        <Button
-            android:id="@+id/button2"
-            style="@style/RoundedButton"
-            android:layout_width="0dp"
-            android:layout_height="80dp"
-            android:layout_marginStart="40dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="10dp"
-            android:drawableTop="@mipmap/ic_luz"
-            app:layout_constraintEnd_toStartOf="@+id/button3"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textMC" />
+            <Spinner
+                android:id="@+id/customSpinner"
+                style="@style/CustomSpinnerStyle"
+                android:layout_width="0dp"
+                android:layout_height="45dp"
+                android:layout_marginTop="24dp"
+                android:drawableEnd="@drawable/custom_spinner_arrow"
+                android:paddingLeft="24dp"
+                android:paddingRight="24dp"
+                app:layout_constraintBottom_toTopOf="@+id/videoPlayer"
+                app:layout_constraintEnd_toStartOf="@+id/botonNotif"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="@+id/videoPlayer"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <Button
-            android:id="@+id/button3"
-            style="@style/RoundedButton"
-            android:layout_width="0dp"
-            android:layout_height="80dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="40dp"
-            android:drawableTop="@mipmap/ic_cuna"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/button2"
-            app:layout_constraintTop_toBottomOf="@+id/textMC" />
+            <com.google.android.exoplayer2.ui.PlayerView
+                android:id="@+id/videoPlayer"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="10dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHeight_percent="0.3"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/customSpinner"
+                app:layout_constraintWidth_percent="0.8"
+                app:use_controller="true" />
 
-        <Button
-            android:id="@+id/button4"
-            style="@style/RoundedButton"
-            android:layout_width="0dp"
-            android:layout_height="80dp"
-            android:layout_marginTop="16dp"
-            android:drawableTop="@mipmap/ic_music"
-            app:layout_constraintEnd_toEndOf="@+id/button2"
-            app:layout_constraintStart_toStartOf="@+id/button2"
-            app:layout_constraintTop_toBottomOf="@+id/textView4" />
+            <Button
+                android:id="@+id/botonNotif"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:background="@android:color/transparent"
+                android:drawableTop="@mipmap/ic_noti"
+                android:drawablePadding="0dp"
+                android:gravity="center"
+                android:padding="0dp"
+                app:layout_constraintBottom_toTopOf="@+id/videoPlayer"
+                app:layout_constraintEnd_toEndOf="@+id/videoPlayer"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/customSpinner"
+                app:layout_constraintTop_toTopOf="@+id/customSpinner"
+                app:layout_constraintVertical_bias="0.5" />
 
-        <Button
-            android:id="@+id/button5"
-            style="@style/RoundedButton"
-            android:layout_width="0dp"
-            android:layout_height="80dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="16dp"
-            android:drawableTop="@mipmap/ic_mic"
-            app:layout_constraintEnd_toEndOf="@+id/button3"
-            app:layout_constraintStart_toEndOf="@+id/button2"
-            app:layout_constraintTop_toBottomOf="@+id/textView6" />
+            <TextView
+                android:id="@+id/textMC"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Monitoreo de cuna"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/videoPlayer"
+                style="@style/SecondaryTextView" />
 
-        <Button
-            android:id="@+id/button6"
-            style="@style/RoundedButton"
-            android:layout_width="0dp"
-            android:layout_height="60dp"
-            android:layout_marginTop="20dp"
-            android:text="Ej"
-            android:drawableLeft="@mipmap/ic_temp"
-            app:layout_constraintEnd_toEndOf="@+id/button4"
-            app:layout_constraintStart_toStartOf="@+id/button4"
-            app:layout_constraintTop_toBottomOf="@+id/textView7" />
+            <Button
+                android:id="@+id/button2"
+                style="@style/RoundedButton"
+                android:layout_width="0dp"
+                android:layout_height="80dp"
+                android:layout_marginStart="40dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="10dp"
+                android:drawableTop="@mipmap/ic_luz"
+                app:layout_constraintEnd_toStartOf="@+id/button3"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textMC" />
 
-        <Button
-            android:id="@+id/button7"
-            style="@style/RoundedButton"
-            android:layout_width="0dp"
-            android:layout_height="60dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="20dp"
-            android:text="Ej"
-            android:drawableLeft="@mipmap/ic_hum"
-            app:layout_constraintEnd_toEndOf="@+id/button5"
-            app:layout_constraintStart_toEndOf="@+id/button4"
-            app:layout_constraintTop_toBottomOf="@+id/textView8" />
+            <Button
+                android:id="@+id/button3"
+                style="@style/RoundedButton"
+                android:layout_width="0dp"
+                android:layout_height="80dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="40dp"
+                android:drawableTop="@mipmap/ic_cuna"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/button2"
+                app:layout_constraintTop_toBottomOf="@+id/textMC" />
 
-        <TextView
-            android:id="@+id/textView4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:text="Luz de cuna"
-            app:layout_constraintEnd_toEndOf="@+id/button2"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="@+id/button2"
-            app:layout_constraintTop_toBottomOf="@+id/button2"
-            style="@style/SecondaryTextView"/>
+            <Button
+                android:id="@+id/button4"
+                style="@style/RoundedButton"
+                android:layout_width="0dp"
+                android:layout_height="80dp"
+                android:layout_marginTop="16dp"
+                android:drawableTop="@mipmap/ic_music"
+                app:layout_constraintEnd_toEndOf="@+id/button2"
+                app:layout_constraintStart_toStartOf="@+id/button2"
+                app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
-        <TextView
-            android:id="@+id/textView6"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:text="Mecimiento de cuna"
-            app:layout_constraintEnd_toEndOf="@+id/button3"
-            app:layout_constraintStart_toStartOf="@+id/button3"
-            app:layout_constraintTop_toBottomOf="@+id/button3"
-            style="@style/SecondaryTextView"/>
+            <Button
+                android:id="@+id/button5"
+                style="@style/RoundedButton"
+                android:layout_width="0dp"
+                android:layout_height="80dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="16dp"
+                android:drawableTop="@mipmap/ic_mic"
+                app:layout_constraintEnd_toEndOf="@+id/button3"
+                app:layout_constraintStart_toEndOf="@+id/button2"
+                app:layout_constraintTop_toBottomOf="@+id/textView6" />
 
-        <TextView
-            android:id="@+id/textView7"
-            style="@style/SecondaryTextView"
-            android:layout_width="100dp"
-            android:layout_height="45dp"
-            android:layout_marginTop="5dp"
-            android:gravity="center"
-            android:lines="2"
-            android:text="Reproducción de música"
-            app:layout_constraintEnd_toEndOf="@+id/button4"
-            app:layout_constraintStart_toStartOf="@+id/button4"
-            app:layout_constraintTop_toBottomOf="@+id/button4" />
+            <Button
+                android:id="@+id/button6"
+                style="@style/RoundedButton"
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                android:layout_marginTop="20dp"
+                android:text="Ej"
+                android:drawableLeft="@mipmap/ic_temp"
+                app:layout_constraintEnd_toEndOf="@+id/button4"
+                app:layout_constraintStart_toStartOf="@+id/button4"
+                app:layout_constraintTop_toBottomOf="@+id/textView7" />
 
-        <TextView
-            android:id="@+id/textView8"
-            style="@style/SecondaryTextView"
-            android:layout_width="100dp"
-            android:layout_height="45dp"
-            android:layout_marginTop="5dp"
-            android:gravity="center"
-            android:lines="2"
-            android:text="Reproducción de audio"
-            app:layout_constraintEnd_toEndOf="@+id/button5"
-            app:layout_constraintStart_toStartOf="@+id/button5"
-            app:layout_constraintTop_toBottomOf="@+id/button5" />
+            <Button
+                android:id="@+id/button7"
+                style="@style/RoundedButton"
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="20dp"
+                android:text="Ej"
+                android:drawableLeft="@mipmap/ic_hum"
+                app:layout_constraintEnd_toEndOf="@+id/button5"
+                app:layout_constraintStart_toEndOf="@+id/button4"
+                app:layout_constraintTop_toBottomOf="@+id/textView8" />
 
-        <TextView
-            android:id="@+id/textView5"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:text="Temperatura"
-            app:layout_constraintEnd_toEndOf="@+id/button6"
-            app:layout_constraintStart_toStartOf="@+id/button6"
-            app:layout_constraintTop_toBottomOf="@+id/button6"
-            style="@style/SecondaryTextView"/>
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="Luz de cuna"
+                app:layout_constraintEnd_toEndOf="@+id/button2"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="@+id/button2"
+                app:layout_constraintTop_toBottomOf="@+id/button2"
+                style="@style/SecondaryTextView" />
 
-        <TextView
-            android:id="@+id/textView9"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:text="Humedad"
-            app:layout_constraintEnd_toEndOf="@+id/button7"
-            app:layout_constraintStart_toStartOf="@+id/button7"
-            app:layout_constraintTop_toBottomOf="@+id/button7"
-            style="@style/SecondaryTextView"/>
+            <TextView
+                android:id="@+id/textView6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="Mecimiento de cuna"
+                app:layout_constraintEnd_toEndOf="@+id/button3"
+                app:layout_constraintStart_toStartOf="@+id/button3"
+                app:layout_constraintTop_toBottomOf="@+id/button3"
+                style="@style/SecondaryTextView" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <TextView
+                android:id="@+id/textView7"
+                style="@style/SecondaryTextView"
+                android:layout_width="100dp"
+                android:layout_height="45dp"
+                android:layout_marginTop="5dp"
+                android:gravity="center"
+                android:lines="2"
+                android:text="Reproducción de música"
+                app:layout_constraintEnd_toEndOf="@+id/button4"
+                app:layout_constraintStart_toStartOf="@+id/button4"
+                app:layout_constraintTop_toBottomOf="@+id/button4" />
 
-</ScrollView>
+            <TextView
+                android:id="@+id/textView8"
+                style="@style/SecondaryTextView"
+                android:layout_width="100dp"
+                android:layout_height="45dp"
+                android:layout_marginTop="5dp"
+                android:gravity="center"
+                android:lines="2"
+                android:text="Reproducción de audio"
+                app:layout_constraintEnd_toEndOf="@+id/button5"
+                app:layout_constraintStart_toStartOf="@+id/button5"
+                app:layout_constraintTop_toBottomOf="@+id/button5" />
+
+            <TextView
+                android:id="@+id/textView5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="Temperatura"
+                app:layout_constraintEnd_toEndOf="@+id/button6"
+                app:layout_constraintStart_toStartOf="@+id/button6"
+                app:layout_constraintTop_toBottomOf="@+id/button6" />
+
+            <TextView
+                android:id="@+id/textView9"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="Humedad"
+                app:layout_constraintEnd_toEndOf="@+id/button7"
+                app:layout_constraintStart_toStartOf="@+id/button7"
+                app:layout_constraintTop_toBottomOf="@+id/button7" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
+
+    <include
+        android:id="@+id/profileLayout"
+        layout="@layout/activity_profile"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/scrollView" />
+</androidx.constraintlayout.widget.ConstraintLayout>

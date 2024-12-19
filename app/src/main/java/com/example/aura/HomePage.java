@@ -1,12 +1,13 @@
 package com.example.aura;
 
 import android.annotation.SuppressLint;
-import android.content.res.Configuration;
+import android.content.Intent;
 import android.os.Bundle;
-import android.widget.ArrayAdapter;
-import android.widget.Spinner;
+import android.widget.ImageButton;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class HomePage extends AppCompatActivity {
 
@@ -16,7 +17,7 @@ public class HomePage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home);
 
-//        // Encuentra el Spinner en el diseño
+//       // Encuentra el Spinner en el diseño
 //        Spinner spinner = findViewById(R.id.customSpinner); // Asegúrate de que el ID coincida con el XML
 //
 //        // Configura el adaptador para el Spinner
@@ -31,8 +32,30 @@ public class HomePage extends AppCompatActivity {
 //
 //        // Asigna el adaptador al Spinner
 //        spinner.setAdapter(adapter);
-    }
 
+
+        // Floating Action Button (FAB)
+        FloatingActionButton fab = findViewById(R.id.fab);
+        fab.setOnClickListener(v -> {
+            Intent intent = new Intent(HomePage.this, HomePage.class);
+            startActivity(intent);
+        });
+
+        // Image Button para stats
+        ImageButton imageButton = findViewById(R.id.imageButton);
+        imageButton.setOnClickListener(a -> {
+            Intent stats = new Intent(HomePage.this, EstadisticasActivity.class);
+            startActivity(stats);
+        });
+
+        // Image Button para configuración
+        ImageButton imageButton2 = findViewById(R.id.imageButton2);
+        imageButton2.setOnClickListener(a -> {
+            Intent configuracion = new Intent(HomePage.this, ConfiguracionActivity.class);
+            startActivity(configuracion);
+        });
+
+    }
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
