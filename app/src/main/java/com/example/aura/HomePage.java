@@ -1,11 +1,19 @@
 package com.example.aura;
 
-import android.annotation.SuppressLint;
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
+import android.app.PendingIntent;
 
 import org.eclipse.paho.client.mqttv3.MqttClient;
 import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
@@ -14,11 +22,10 @@ import org.eclipse.paho.client.mqttv3.MqttMessage;
 
 public class HomePage extends AppCompatActivity {
 
-    @SuppressLint("ResourceType")
-    private static final String BROKER = "tcp://192.168.113.201:1883"; // Dirección del broker MQTT
-    private static final String TOPIC_SERVO = "cuna/servo";          // Tópico para controlar el servo
-    private static final String TOPIC_LUZ = "cuna/luz";              // Tópico para controlar los LEDs
-    private static final int QOS = 1;                                // Calidad de servicio MQTT
+    private static final String BROKER = "tcp://192.168.113.201:1883";
+    private static final String TOPIC_SERVO = "cuna/servo";
+    private static final String TOPIC_LUZ = "cuna/luz";
+    private static final int QOS = 1;
 
     private MqttClient client;
     private MqttConnectOptions options;
@@ -26,38 +33,27 @@ public class HomePage extends AppCompatActivity {
     private Button buttonServo;
     private Button buttonLuz;
 
-    private boolean isServoMoving = false; // Estado del servo: true = moviéndose, false = detenido
-    private boolean isLuzOn = false;      // Estado de los LEDs: true = encendidos, false = apagados
-    private boolean isReconnecting = false; // Flag para evitar intentos de reconexión simultáneos
+    private boolean isServoMoving = false;
+    private boolean isLuzOn = false;
+    private boolean isReconnecting = false;
+
+    private static final String CHANNEL_ID = "MQTT_Notifications";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home);
 
-        // Inicializa los botones
         buttonServo = findViewById(R.id.servo);
         buttonLuz = findViewById(R.id.luz);
 
-        // Establecer los escuchadores de clics
         buttonServo.setOnClickListener(v -> toggleServo());
         buttonLuz.setOnClickListener(v -> toggleLuz());
 
-        // Ejecuta la configuración MQTT en un hilo separado para no bloquear el hilo principal
+        // Configuración MQTT en un hilo separado
         new Thread(() -> setupMQTT()).start();
-    }
 
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        // Aquí solo guardaríamos el estado si es necesario (por ejemplo, si la actividad se destruye)
-        // No es necesario inicializar botones ni la conexión MQTT aquí.
-    }
-
-    @Override
-    protected void onRestoreInstanceState(Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
-        // Restaurar el estado de la actividad si es necesario.
+        createNotificationChannel();
     }
 
     private void setupMQTT() {
@@ -68,38 +64,44 @@ public class HomePage extends AppCompatActivity {
             options.setCleanSession(true);
             options.setAutomaticReconnect(true);
 
-            // Conectar en un hilo separado para evitar el ANR
             client.connect(options);
             Log.i("MQTT", "Conexión al broker MQTT exitosa.");
 
-            // Suscripción a tópicos
-            client.subscribe(TOPIC_SERVO);         // Suscribirse al tópico del servo
-            client.subscribe(TOPIC_LUZ);          // Suscribirse al tópico de los LEDs
+            client.subscribe(TOPIC_SERVO);
+            client.subscribe(TOPIC_LUZ);
 
         } catch (MqttException e) {
             Log.e("MQTT", "Error al conectar al broker: " + e.getMessage(), e);
-            reconnectMQTT();  // Intentar reconectar en caso de fallo
+            reconnectMQTT();
         }
     }
 
     private void toggleServo() {
         new Thread(() -> {
             try {
-                // Verificar si el cliente está conectado antes de enviar el mensaje
                 if (!client.isConnected()) {
                     Log.w("MQTT", "El cliente no está conectado. Intentando reconectar...");
-                    reconnectMQTT(); // Intentar reconectar solo si no hay otra reconexión en progreso
-                    return; // Salir del método si el cliente no está conectado
+                    reconnectMQTT();
+                    return;
                 }
 
-                // Cambiar estado del servo
                 isServoMoving = !isServoMoving;
 
-                // Enviar mensaje al broker MQTT en un hilo separado
-                String message = isServoMoving ? "1" : "0"; // "1" para mover, "0" para detener
+                String message = isServoMoving ? "1" : "0";
                 client.publish(TOPIC_SERVO, new MqttMessage(message.getBytes()));
 
                 Log.i("MQTT", "Estado del servo cambiado: " + message);
+
+                // Guardar el estado del servo
+                saveServoState(isServoMoving);
+
+                // Mostrar o cancelar la notificación según el estado del servo
+                if (isServoMoving) {
+                    showServoNotification();
+                } else {
+                    cancelServoNotification();
+                }
+
             } catch (MqttException e) {
                 Log.e("MQTT", "Error al enviar comando MQTT: " + e.getMessage(), e);
             }
@@ -109,51 +111,163 @@ public class HomePage extends AppCompatActivity {
     private void toggleLuz() {
         new Thread(() -> {
             try {
-                // Verificar si el cliente está conectado antes de enviar el mensaje
                 if (!client.isConnected()) {
                     Log.w("MQTT", "El cliente no está conectado. Intentando reconectar...");
-                    reconnectMQTT(); // Intentar reconectar solo si no hay otra reconexión en progreso
-                    return; // Salir del método si el cliente no está conectado
+                    reconnectMQTT();
+                    return;
                 }
 
-                // Cambiar estado de los LEDs
                 isLuzOn = !isLuzOn;
 
-                // Enviar mensaje al broker MQTT en un hilo separado
-                String message = isLuzOn ? "1" : "0"; // "1" para encender, "0" para apagar
+                String message = isLuzOn ? "1" : "0";
                 client.publish(TOPIC_LUZ, new MqttMessage(message.getBytes()));
 
                 Log.i("MQTT", "Estado de los LEDs cambiado: " + message);
+
+                // Guardar el estado de la luz
+                saveLuzState(isLuzOn);
+
+                // Mostrar o cancelar la notificación según el estado de los LEDs
+                if (isLuzOn) {
+                    showLuzNotification();
+                } else {
+                    cancelLuzNotification();
+                }
+
             } catch (MqttException e) {
                 Log.e("MQTT", "Error al enviar comando MQTT: " + e.getMessage(), e);
             }
         }).start();
     }
 
+    // Guardar el estado del servo
+    private void saveServoState(boolean isMoving) {
+        SharedPreferences sharedPreferences = getSharedPreferences("DeviceStates", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putBoolean("servoState", isMoving);
+        editor.apply();
+    }
+
+    // Guardar el estado de la luz
+    private void saveLuzState(boolean isOn) {
+        SharedPreferences sharedPreferences = getSharedPreferences("DeviceStates", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putBoolean("luzState", isOn);
+        editor.apply();
+    }
+
+    private void showServoNotification() {
+        // Crear un Intent para abrir la actividad HomePage al hacer clic en la notificación
+        Intent intent = new Intent(this, HomePage.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_IMMUTABLE);
+
+        // Crear la notificación
+        Notification notification = new NotificationCompat.Builder(this, CHANNEL_ID)
+                .setContentTitle("Mecimiento de la cuna")
+                .setContentText("La cuna se está moviendo.")
+                .setSmallIcon(R.mipmap.ic_cuna)
+                .setContentIntent(pendingIntent)  // Asocia el PendingIntent con la notificación
+                .build();
+
+        // Mostrar la notificación sin auto cancelarla
+        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        notificationManager.notify(1, notification);
+    }
+
+    private void cancelServoNotification() {
+        // Cancelar la notificación solo si el servo no está funcionando
+        if (!isServoMoving) {
+            NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+            notificationManager.cancel(1);
+        }
+    }
+
+    private void showLuzNotification() {
+        // Crear un Intent para abrir la actividad HomePage al hacer clic en la notificación
+        Intent intent = new Intent(this, HomePage.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_IMMUTABLE);
+
+        // Crear la notificación
+        Notification notification = new NotificationCompat.Builder(this, CHANNEL_ID)
+                .setContentTitle("Luz del bebé")
+                .setContentText("Las luces están encendidas.")
+                .setSmallIcon(R.mipmap.ic_luz)
+                .setContentIntent(pendingIntent)  // Asocia el PendingIntent con la notificación
+                .build();
+
+        // Mostrar la notificación sin auto cancelarla
+        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        notificationManager.notify(2, notification);
+    }
+
+    private void cancelLuzNotification() {
+        // Cancelar la notificación solo si los LEDs no están encendidos
+        if (!isLuzOn) {
+            NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+            notificationManager.cancel(2);
+        }
+    }
+
+    private void createNotificationChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence name = "MQTT Notifications";
+            String description = "Notificaciones relacionadas con el estado de los dispositivos MQTT";
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, name, importance);
+            channel.setDescription(description);
+
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
+    }
+
     private void reconnectMQTT() {
         if (!isReconnecting) {
-            isReconnecting = true; // Marcar que estamos en proceso de reconexión
+            isReconnecting = true;
             try {
-                // Solo intentar conectar si el cliente no está conectado
                 if (!client.isConnected()) {
                     Log.i("MQTT", "Intentando reconectar...");
-                    client.connect(options);  // Intentar reconectar
+                    client.connect(options);
                     Log.i("MQTT", "Reconectado al broker MQTT.");
                 }
             } catch (MqttException e) {
                 Log.e("MQTT", "Error al reconectar: " + e.getMessage(), e);
-                // Si la reconexión falla, espera un poco antes de reintentar
                 try {
-                    Thread.sleep(2000); // Esperar 2 segundos antes de volver a intentar
+                    Thread.sleep(2000);
                 } catch (InterruptedException ex) {
                     Thread.currentThread().interrupt();
                 }
-                reconnectMQTT(); // Intentar reconectar nuevamente
+                reconnectMQTT();
             } finally {
-                isReconnecting = false; // Marcar que ya hemos terminado el proceso de reconexión
+                isReconnecting = false;
             }
         } else {
             Log.w("MQTT", "Ya hay una reconexión en progreso.");
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        // Recuperar el estado guardado del servo y la luz
+        SharedPreferences sharedPreferences = getSharedPreferences("DeviceStates", MODE_PRIVATE);
+        isServoMoving = sharedPreferences.getBoolean("servoState", false);  // por defecto es false
+        isLuzOn = sharedPreferences.getBoolean("luzState", false);  // por defecto es false
+
+        // Actualizar el estado de las notificaciones si es necesario
+        if (isServoMoving) {
+            showServoNotification();
+        } else {
+            cancelServoNotification();
+        }
+
+        if (isLuzOn) {
+            showLuzNotification();
+        } else {
+            cancelLuzNotification();
         }
     }
 }
