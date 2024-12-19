@@ -9,4 +9,8 @@
     <color name="azul_oscuro">#191C38</color>
     <color name="teal_700">#00796B</color>
     <color name="blanco_raro">#D7D7D7</color>
+    <color name="red">#ff0000</color>
+    <color name="red_light">#ff5656</color>
+    <color name="blue">#0432ff</color>
+    <color name="blue_light">#566bff</color>
 </resources>
