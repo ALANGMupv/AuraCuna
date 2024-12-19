@@ -3,6 +3,10 @@
 
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_SPECIAL_USE" />
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -48,7 +52,20 @@
             android:configChanges="orientation|screenSize"
             android:exported="true" />
 
+        <activity android:name=".AcercaDeActivity"
+            android:label="Acerca de ..."
+            android:theme="@style/Theme.AppCompat.Light.Dialog"
+            />
 
+        <activity android:name=".EditarDatosPersonalesActivity"
+            android:label="Editar datos personales"
+            android:theme="@style/PopupTheme"
+            />
+
+        <activity android:name=".CambiarContrasenyaActivity"
+            android:label= "Cambiar contraseña"
+            android:theme="@style/PopupTheme"
+            />
 
         <meta-data
             android:name="preloaded_fonts"

@@ -12,16 +12,6 @@
         android:padding="10dp"
         android:text="Aura es una aplicación innovadora en el ámbito de Estilo de vida, Belleza y Cuidado personal. Diseñada para aumentar tu confianza al vestir, utiliza inteligencia artificial y colorimetría para analizar tus outfits, asegurando que se ajusten a tus rasgos físicos y combinen de manera armoniosa.  Nuestra herramienta ofrece recomendaciones personalizadas basadas en las prendas que ya tienes, ayudándote a crear looks que realzan tu apariencia. Aura está dirigida a quienes buscan mejorar su estilo, desde amantes de la moda hasta profesionales de la imagen.  Además, nuestra funcionalidad de prototipo incluye sensores que interactúan con tu entorno, permitiéndote realizar análisis de colorimetría de manera sencilla y eficiente. Con Aura, optimiza tu armario y descubre un nuevo nivel de confianza al vestir."
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView5" />
+        tools:layout_editor_absoluteY="47dp" />
 
-    <TextView
-        android:id="@+id/textView5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="10dp"
-        android:text="Acerca De:"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

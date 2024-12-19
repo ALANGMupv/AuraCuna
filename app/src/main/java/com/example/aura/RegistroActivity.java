@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -35,7 +36,8 @@ public class RegistroActivity extends AppCompatActivity {
     private FirebaseFirestore db;
     private GoogleSignInClient googleSignInClient;
     private ProgressDialog dialogo;
-    private EditText etCorreo, etContraseña, etRepContraseña, etNombre, etApellido;
+    private EditText etCorreo, etContraseña;
+    private EditText etRepContraseña, etNombre, etApellido;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +55,7 @@ public class RegistroActivity extends AppCompatActivity {
         etContraseña = findViewById(R.id.contraseña);
         etNombre = findViewById(R.id.nombre);
         etApellido = findViewById(R.id.apellido);
+        etRepContraseña = findViewById(R.id.repContraseña);
 
         // Configuración de Google Sign-In
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -95,7 +98,13 @@ public class RegistroActivity extends AppCompatActivity {
             if (task.isSuccessful()) {
                 FirebaseUser usuario = auth.getCurrentUser();
                 if (usuario != null) {
-                    verificarRegistroEnFirestore(usuario);
+                    // Obtener nombre y apellidos del GoogleSignInAccount
+                    String nombreCompleto = account.getDisplayName();
+                    String[] nombreApellidos = nombreCompleto != null ? nombreCompleto.split(" ", 2) : new String[]{"Nombre desconocido", "Apellido desconocido"};
+                    String nombre = nombreApellidos[0];
+                    String apellidos = nombreApellidos.length > 1 ? nombreApellidos[1] : "Apellido desconocido";
+
+                    verificarRegistroEnFirestore(usuario, nombre, apellidos);
                 }
             } else {
                 dialogo.dismiss();
@@ -104,7 +113,8 @@ public class RegistroActivity extends AppCompatActivity {
         });
     }
 
-    private void verificarRegistroEnFirestore(FirebaseUser usuario) {
+
+    private void verificarRegistroEnFirestore(FirebaseUser usuario, String nombre, String apellidos) {
         String correo = usuario.getEmail();
         if (correo == null) {
             dialogo.dismiss();
@@ -119,8 +129,8 @@ public class RegistroActivity extends AppCompatActivity {
                 Snackbar.make(findViewById(R.id.contenedor), "Inicio de sesión exitoso.", Snackbar.LENGTH_LONG).show();
                 redirigirAMainActivity();
             } else {
-                // Usuario no registrado en Firestore, registrarlo
-                registrarUsuarioEnFirestore(usuario);
+                // Usuario no registrado en Firestore, registrarlo con nombre y apellidos
+                registrarUsuarioEnFirestore(usuario, nombre, apellidos);
             }
         }).addOnFailureListener(e -> {
             dialogo.dismiss();
@@ -128,15 +138,15 @@ public class RegistroActivity extends AppCompatActivity {
         });
     }
 
-    private void registrarUsuarioEnFirestore(FirebaseUser usuario) {
+    private void registrarUsuarioEnFirestore(FirebaseUser usuario, String nombre, String apellidos) {
         String userId = usuario.getUid();
         String correo = usuario.getEmail();
-        String nombre = usuario.getDisplayName();
 
         Map<String, Object> datosUsuario = new HashMap<>();
         datosUsuario.put("nombre", nombre != null ? nombre : "Nombre desconocido");
-        datosUsuario.put("apellido", ""); // Puedes obtener más datos si es necesario
+        datosUsuario.put("apellido", apellidos != null ? apellidos : "Apellido desconocido");
         datosUsuario.put("correo", correo);
+        datosUsuario.put("cunaAsociada", "cuna1");
 
         db.collection("usuarios").document(userId).set(datosUsuario).addOnSuccessListener(aVoid -> {
             Snackbar.make(findViewById(R.id.contenedor), "Usuario registrado exitosamente.", Snackbar.LENGTH_LONG).show();
@@ -154,37 +164,78 @@ public class RegistroActivity extends AppCompatActivity {
         dialogo.show();
         String correo = etCorreo.getText().toString().trim();
         String contraseña = etContraseña.getText().toString().trim();
+        String repContraseña = etRepContraseña.getText().toString().trim();
+        String nombre = etNombre.getText().toString().trim();
+        String apellidos = etApellido.getText().toString().trim();
 
-        auth.createUserWithEmailAndPassword(correo, contraseña).addOnCompleteListener(this, task -> {
+        // Verificaciones de los campos
+        if (correo.isEmpty()) {
+            etCorreo.setError("Introduce un correo");
+            Toast.makeText(this, "Introduce un correo", Toast.LENGTH_SHORT).show();
             dialogo.dismiss();
-            if (task.isSuccessful()) {
-                FirebaseUser usuario = auth.getCurrentUser();
-                if (usuario != null) {
-                    // Llamada al método registrarUsuarioEnFirestore
-                    registrarUsuarioEnFirestore(usuario);
+            return;
+        } else if (!correo.matches(".+@.+[.].+")) {
+            etCorreo.setError("Introduce un correo válido");
+            Toast.makeText(this, "Introduce un correo válido", Toast.LENGTH_SHORT).show();
+            dialogo.dismiss();
+            return;
+        } else if (contraseña.isEmpty()) {
+            etContraseña.setError("Introduce una contraseña");
+            Toast.makeText(this, "Introduce una contraseña", Toast.LENGTH_SHORT).show();
+            dialogo.dismiss();
+            return;
+        } else if (contraseña.length() < 6) {
+            etContraseña.setError("Ha de contener al menos 6 caracteres");
+            Toast.makeText(this, "Ha de contener al menos 6 caracteres", Toast.LENGTH_SHORT).show();
+            dialogo.dismiss();
+            return;
+        } else if (!contraseña.matches(".*[0-9].*")) {
+            etContraseña.setError("Ha de contener un número");
+            Toast.makeText(this, "Ha de contener un número", Toast.LENGTH_SHORT).show();
+            dialogo.dismiss();
+            return;
+        } else if (!contraseña.matches(".*[A-Z].*")) {
+            etContraseña.setError("Ha de contener una letra mayúscula");
+            Toast.makeText(this, "Ha de contener una letra mayúscula", Toast.LENGTH_SHORT).show();
 
-                    // Llamada al método enviarCorreoVerificacion
-                    usuario.sendEmailVerification().addOnCompleteListener(emailTask -> {
-                        if (emailTask.isSuccessful()) {
-                            Snackbar.make(findViewById(R.id.contenedor), "Registro exitoso. Verifique su correo electrónico para activar su cuenta.", Snackbar.LENGTH_LONG).show();
-                            // Redirige al LoginActivity
-                            Intent intent = new Intent(RegistroActivity.this, LoginActivity.class);
-                            startActivity(intent);
-                            finish();
-                            // Cierra la sesión después del registro
-                            auth.signOut();
+            dialogo.dismiss();
+            return;
+        } else if (!contraseña.equals(repContraseña)) {
+            etRepContraseña.setError("Las contraseñas no coinciden");
+            Toast.makeText(this, "Las contraseñas no coinciden", Toast.LENGTH_SHORT).show();
+            dialogo.dismiss();
+            return;
+        } else {
+            auth.createUserWithEmailAndPassword(correo, contraseña).addOnCompleteListener(this, task -> {
+                dialogo.dismiss();
+                if (task.isSuccessful()) {
+                    FirebaseUser usuario = auth.getCurrentUser();
+                    if (usuario != null) {
+                        // Llamada al método registrarUsuarioEnFirestore
+                        registrarUsuarioEnFirestore(usuario, nombre, apellidos);
 
-                        } else {
-                            Snackbar.make(findViewById(R.id.contenedor), "Error al enviar correo de verificación: " + emailTask.getException().getMessage(), Snackbar.LENGTH_LONG).show();
-                        }
-                    });
+                        // Llamada al método enviarCorreoVerificacion
+                        usuario.sendEmailVerification().addOnCompleteListener(emailTask -> {
+                            if (emailTask.isSuccessful()) {
+                                Snackbar.make(findViewById(R.id.contenedor), "Registro exitoso. Verifique su correo electrónico para activar su cuenta.", Snackbar.LENGTH_LONG).show();
+                                // Redirige al LoginActivity
+                                Intent intent = new Intent(RegistroActivity.this, LoginActivity.class);
+                                startActivity(intent);
+                                finish();
+                                // Cierra la sesión después del registro
+                                auth.signOut();
+
+                            } else {
+                                Snackbar.make(findViewById(R.id.contenedor), "Error al enviar correo de verificación: " + emailTask.getException().getMessage(), Snackbar.LENGTH_LONG).show();
+                            }
+                        });
+                    }
+                } else {
+                    Snackbar.make(findViewById(R.id.contenedor), "Error al crear cuenta: " + task.getException().getMessage(), Snackbar.LENGTH_LONG).show();
                 }
-            } else {
-                Snackbar.make(findViewById(R.id.contenedor), "Error al crear cuenta: " + task.getException().getMessage(), Snackbar.LENGTH_LONG).show();
-            }
-        });
+            });
+        }
     }
-
 
     public void ir_a_inicio_sesion(View v) {
         Intent intent = new Intent(RegistroActivity.this, LoginActivity.class);

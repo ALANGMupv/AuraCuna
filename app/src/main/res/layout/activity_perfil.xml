@@ -67,7 +67,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/textView" />
 
             <TextView
-                android:id="@+id/textView6"
+                android:id="@+id/apellidos"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:layout_marginTop="16dp"
@@ -91,33 +91,33 @@
                 android:textSize="19sp"
                 android:textStyle="bold"
                 app:cornerRadius="12dp"
-                app:layout_constraintBottom_toTopOf="@+id/button"
-                app:layout_constraintEnd_toEndOf="@+id/acerca_de"
-                app:layout_constraintStart_toStartOf="@+id/acerca_de"
+                app:layout_constraintBottom_toTopOf="@+id/cambiar_contrasenya"
+                app:layout_constraintEnd_toEndOf="@+id/correo_electronico"
+                app:layout_constraintStart_toStartOf="@+id/correo_electronico"
                 app:layout_constraintTop_toBottomOf="@+id/tv_correo"
                 app:layout_constraintVertical_bias="0.886" />
 
             <TextView
-                android:id="@+id/acerca_de"
+                android:id="@+id/correo_electronico"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:layout_marginTop="16dp"
                 android:fontFamily="@font/quicksand_bold"
                 android:text="Correo electrónico"
                 android:textSize="17sp"
-                app:layout_constraintEnd_toEndOf="@+id/textView6"
-                app:layout_constraintStart_toStartOf="@+id/textView6"
+                app:layout_constraintEnd_toEndOf="@+id/apellidos"
+                app:layout_constraintStart_toStartOf="@+id/apellidos"
                 app:layout_constraintTop_toBottomOf="@+id/tv_apellido" />
 
             <Button
-                android:id="@+id/button"
+                android:id="@+id/cambiar_contrasenya"
                 android:layout_width="280dp"
                 android:layout_height="55dp"
                 android:layout_marginBottom="38dp"
                 android:backgroundTint="#2F3C62"
                 android:fontFamily="@font/quicksand"
                 android:paddingBottom="10dp"
-                android:text="Reestablecer contraseña"
+                android:text="Cambiar contraseña"
                 android:textAlignment="center"
                 android:textColor="#FFFFFF"
                 android:textSize="19sp"
@@ -145,9 +145,9 @@
                 android:text="TextView"
                 android:textColor="#878787"
                 android:textSize="20sp"
-                app:layout_constraintEnd_toEndOf="@+id/textView6"
-                app:layout_constraintStart_toStartOf="@+id/textView6"
-                app:layout_constraintTop_toBottomOf="@+id/textView6" />
+                app:layout_constraintEnd_toEndOf="@+id/apellidos"
+                app:layout_constraintStart_toStartOf="@+id/apellidos"
+                app:layout_constraintTop_toBottomOf="@+id/apellidos" />
 
             <TextView
                 android:id="@+id/tv_correo"
@@ -156,9 +156,9 @@
                 android:text="TextView"
                 android:textColor="#878787"
                 android:textSize="20sp"
-                app:layout_constraintEnd_toEndOf="@+id/acerca_de"
-                app:layout_constraintStart_toStartOf="@+id/acerca_de"
-                app:layout_constraintTop_toBottomOf="@+id/acerca_de" />
+                app:layout_constraintEnd_toEndOf="@+id/correo_electronico"
+                app:layout_constraintStart_toStartOf="@+id/correo_electronico"
+                app:layout_constraintTop_toBottomOf="@+id/correo_electronico" />
 
             <ImageView
                 android:id="@+id/imageView2"
