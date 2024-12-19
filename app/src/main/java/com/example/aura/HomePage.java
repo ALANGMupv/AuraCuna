@@ -1,5 +1,6 @@
 package com.example.aura;
 
+import android.annotation.SuppressLint;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -10,10 +11,12 @@ import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
+import android.widget.ImageButton;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
-import android.app.PendingIntent;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.eclipse.paho.client.mqttv3.MqttClient;
 import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
@@ -39,6 +42,7 @@ public class HomePage extends AppCompatActivity {
 
     private static final String CHANNEL_ID = "MQTT_Notifications";
 
+    @SuppressLint("ResourceType")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,6 +58,28 @@ public class HomePage extends AppCompatActivity {
         new Thread(() -> setupMQTT()).start();
 
         createNotificationChannel();
+
+        // Floating Action Button (FAB)
+        FloatingActionButton fab = findViewById(R.id.fab);
+        fab.setOnClickListener(v -> {
+            Intent intent = new Intent(HomePage.this, HomePage.class);
+            startActivity(intent);
+        });
+
+        // Image Button para stats
+        ImageButton imageButton = findViewById(R.id.imageButton);
+        imageButton.setOnClickListener(a -> {
+            Intent stats = new Intent(HomePage.this, EstadisticasActivity.class);
+            startActivity(stats);
+        });
+
+        // Image Button para configuración
+        ImageButton imageButton2 = findViewById(R.id.imageButton2);
+        imageButton2.setOnClickListener(a -> {
+            Intent configuracion = new Intent(HomePage.this, ConfiguracionActivity.class);
+            startActivity(configuracion);
+        });
+
     }
 
     private void setupMQTT() {
@@ -157,26 +183,22 @@ public class HomePage extends AppCompatActivity {
     }
 
     private void showServoNotification() {
-        // Crear un Intent para abrir la actividad HomePage al hacer clic en la notificación
         Intent intent = new Intent(this, HomePage.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_IMMUTABLE);
 
-        // Crear la notificación
         Notification notification = new NotificationCompat.Builder(this, CHANNEL_ID)
                 .setContentTitle("Mecimiento de la cuna")
                 .setContentText("La cuna se está moviendo.")
                 .setSmallIcon(R.mipmap.ic_cuna)
-                .setContentIntent(pendingIntent)  // Asocia el PendingIntent con la notificación
+                .setContentIntent(pendingIntent)
                 .build();
 
-        // Mostrar la notificación sin auto cancelarla
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.notify(1, notification);
     }
 
     private void cancelServoNotification() {
-        // Cancelar la notificación solo si el servo no está funcionando
         if (!isServoMoving) {
             NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
             notificationManager.cancel(1);
@@ -184,26 +206,22 @@ public class HomePage extends AppCompatActivity {
     }
 
     private void showLuzNotification() {
-        // Crear un Intent para abrir la actividad HomePage al hacer clic en la notificación
         Intent intent = new Intent(this, HomePage.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_IMMUTABLE);
 
-        // Crear la notificación
         Notification notification = new NotificationCompat.Builder(this, CHANNEL_ID)
                 .setContentTitle("Luz del bebé")
                 .setContentText("Las luces están encendidas.")
                 .setSmallIcon(R.mipmap.ic_luz)
-                .setContentIntent(pendingIntent)  // Asocia el PendingIntent con la notificación
+                .setContentIntent(pendingIntent)
                 .build();
 
-        // Mostrar la notificación sin auto cancelarla
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.notify(2, notification);
     }
 
     private void cancelLuzNotification() {
-        // Cancelar la notificación solo si los LEDs no están encendidos
         if (!isLuzOn) {
             NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
             notificationManager.cancel(2);
@@ -252,12 +270,10 @@ public class HomePage extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
-        // Recuperar el estado guardado del servo y la luz
         SharedPreferences sharedPreferences = getSharedPreferences("DeviceStates", MODE_PRIVATE);
-        isServoMoving = sharedPreferences.getBoolean("servoState", false);  // por defecto es false
-        isLuzOn = sharedPreferences.getBoolean("luzState", false);  // por defecto es false
+        isServoMoving = sharedPreferences.getBoolean("servoState", false);
+        isLuzOn = sharedPreferences.getBoolean("luzState", false);
 
-        // Actualizar el estado de las notificaciones si es necesario
         if (isServoMoving) {
             showServoNotification();
         } else {
@@ -269,5 +285,15 @@ public class HomePage extends AppCompatActivity {
         } else {
             cancelLuzNotification();
         }
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
     }
 }
