@@ -48,7 +48,20 @@
             android:configChanges="orientation|screenSize"
             android:exported="true" />
 
+        <activity android:name=".AcercaDeActivity"
+            android:label="Acerca de ..."
+            android:theme="@style/Theme.AppCompat.Light.Dialog"
+            />
 
+        <activity android:name=".EditarDatosPersonalesActivity"
+            android:label="Editar datos personales"
+            android:theme="@style/PopupTheme"
+            />
+
+        <activity android:name=".CambiarContrasenyaActivity"
+            android:label= "Cambiar contraseña"
+            android:theme="@style/PopupTheme"
+            />
 
         <meta-data
             android:name="preloaded_fonts"

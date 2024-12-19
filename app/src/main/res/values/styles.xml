@@ -69,6 +69,8 @@
         <item name="backgroundTint">@color/blanco_raro</item>
     </style>
 
+
+
     <!-- Estilo para los TextView principales -->
     <style name="MainTextView">
         <item name="android:layout_width">wrap_content</item>
@@ -95,4 +97,13 @@
         <item name="android:textColor">@color/blanco_raro</item>
     </style>
 
+    <style name="PopupTheme" parent="Theme.AppCompat.Light.Dialog">
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:layout_width">400dp</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
 </resources>

@@ -5,6 +5,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+import android.widget.TextView;
+
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -17,6 +20,14 @@ public class ConfiguracionActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_configuracion);
+
+        TextView lanzarAcercaDe = findViewById(R.id.tv_acerca_de);
+        lanzarAcercaDe.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                lanzarAcercaDe(view);
+            }
+        });
     }
 
     public void perfilUsuario(View v) {
@@ -25,17 +36,34 @@ public class ConfiguracionActivity extends AppCompatActivity {
         finish();
     }
 
-    public void cerrarSesion(View v) {
-        auth.signOut();
-        Intent i = new Intent(this, LoginActivity.class);
-        startActivity(i);
-        finish();
+    public void cerrarSesion(View view) {
+
+        new AlertDialog.Builder(this)
+                .setTitle("Cerrar sesión")
+                .setMessage("¿Estás seguro de que deseas cerrar sesión?")
+                .setPositiveButton("Sí", (dialog, which) -> {
+                    // Acción para cerrar sesión
+                    auth.signOut();
+                    Intent i = new Intent(this, LoginActivity.class);
+                    startActivity(i);
+                    finish(); // Finalizar la actividad actual
+                })
+                .setNegativeButton("No", (dialog, which) -> {
+                    // Acción de cancelación (cerrar el diálogo)
+                    dialog.dismiss();
+                })
+                .show();
     }
 
     public void regresar(View v) {
         Intent i = new Intent(this, MainActivity.class);
         startActivity(i);
         finish();
+    }
+
+    public void lanzarAcercaDe(View view){
+        Intent i = new Intent(this, AcercaDeActivity.class);
+        startActivity(i);
     }
 }
 
