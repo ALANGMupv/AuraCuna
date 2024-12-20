@@ -85,21 +85,17 @@ public class EstadisticasActivity extends AppCompatActivity {
     }
 
     private void cargarDatosActuales() {
-        db.collection("Cunas").document("cuna1").collection("historico")
-                .limit(1) // Obtener solo el primer documento encontrado
+        db.collection("Cunas").document("cuna1") // Accede directamente al documento "cuna1"
                 .get()
-                .addOnSuccessListener(querySnapshot -> {
-                    if (!querySnapshot.isEmpty()) {
-                        // Obtiene el primer documento de la subcolección
-                        QueryDocumentSnapshot document = (QueryDocumentSnapshot) querySnapshot.getDocuments().get(0);
-
-                        // Obtiene el estado de la cuna, puede ser "ocupada" o "vacia"
-                        String estadoCuna = document.getString("estadoCuna");
+                .addOnSuccessListener(documentSnapshot -> {
+                    if (documentSnapshot.exists()) {
+                        // Obtén el estado de la cuna desde el documento
+                        String estadoCuna = documentSnapshot.getString("estadoCuna");
 
                         // Actualiza el TextView con el estado de la cuna
                         estadoCunaTextView.setText(estadoCuna != null ? estadoCuna : "Estado desconocido");
                     } else {
-                        estadoCunaTextView.setText("No hay documentos disponibles");
+                        estadoCunaTextView.setText("El documento no existe");
                     }
                 })
                 .addOnFailureListener(e -> {
@@ -107,6 +103,7 @@ public class EstadisticasActivity extends AppCompatActivity {
                     estadoCunaTextView.setText("Error al cargar");
                 });
     }
+
 
     private void cargarDatosHistoricos() {
         db.collection("Cunas").document("cuna1").collection("historico")
