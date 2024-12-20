@@ -155,7 +155,7 @@ public class RegistroActivity extends AppCompatActivity {
     }
 
     private void redirigirAMainActivity() {
-        Intent intent = new Intent(RegistroActivity.this, MainActivity.class);
+        Intent intent = new Intent(RegistroActivity.this, HomePage.class);
         startActivity(intent);
         finish();
     }

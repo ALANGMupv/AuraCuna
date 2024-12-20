@@ -13,7 +13,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.OAuthProvider;
 
-public class TwitterActivity extends MainActivity {
+public class TwitterActivity extends HomePage {
 
     FirebaseAuth firebaseAuth;
 
@@ -35,7 +35,7 @@ public class TwitterActivity extends MainActivity {
                             new OnSuccessListener<AuthResult>() {
                                 @Override
                                 public void onSuccess(AuthResult authResult) {
-                                    startActivity(new Intent(TwitterActivity.this, MainActivity.class));
+                                    startActivity(new Intent(TwitterActivity.this, HomePage.class));
                                     Toast.makeText(TwitterActivity.this, "Login Successful",  Toast.LENGTH_SHORT).show();
                                 }
                             })
@@ -54,7 +54,7 @@ public class TwitterActivity extends MainActivity {
                             new OnSuccessListener<AuthResult>() {
                                 @Override
                                 public void onSuccess(AuthResult authResult) {
-                                    startActivity(new Intent(TwitterActivity.this, MainActivity.class));
+                                    startActivity(new Intent(TwitterActivity.this, HomePage.class));
                                     Toast.makeText(TwitterActivity.this, "Login Successful",  Toast.LENGTH_SHORT).show();
                                 }
                             })

@@ -92,7 +92,7 @@ public class ConfiguracionActivity extends AppCompatActivity {
     }
 
     public void regresar(View v) {
-        Intent i = new Intent(this, MainActivity.class);
+        Intent i = new Intent(this, HomePage.class);
         startActivity(i);
         finish();
     }

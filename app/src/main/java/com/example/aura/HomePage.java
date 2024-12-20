@@ -90,7 +90,7 @@ public class HomePage extends AppCompatActivity {
         // Image Button para stats
         ImageButton imageButton = findViewById(R.id.imageButton);
         imageButton.setOnClickListener(a -> {
-            Intent stats = new Intent(HomePage.this, HomePage.class);
+            Intent stats = new Intent(HomePage.this, EstadisticasActivity.class);
             startActivity(stats);
         });
 
