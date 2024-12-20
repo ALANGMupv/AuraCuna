@@ -1,8 +1,10 @@
 package com.example.aura;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,6 +15,7 @@ import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
@@ -31,6 +34,27 @@ public class EstadisticasActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_estadisticas);
+
+        // Floating Action Button (FAB)
+        FloatingActionButton fab = findViewById(R.id.fab);
+        fab.setOnClickListener(v -> {
+            Intent intent = new Intent(EstadisticasActivity.this, HomePage.class);
+            startActivity(intent);
+        });
+
+        // Image Button para stats
+        ImageButton imageButton = findViewById(R.id.imageButton);
+        imageButton.setOnClickListener(a -> {
+            Intent stats = new Intent(EstadisticasActivity.this, EstadisticasActivity.class);
+            startActivity(stats);
+        });
+
+        // Image Button para configuración
+        ImageButton imageButton2 = findViewById(R.id.imageButton2);
+        imageButton2.setOnClickListener(a -> {
+            Intent configuracion = new Intent(EstadisticasActivity.this, ConfiguracionActivity.class);
+            startActivity(configuracion);
+        });
 
         // Inicializar elementos de la interfaz
         lineChart = findViewById(R.id.grafica_ambiente);

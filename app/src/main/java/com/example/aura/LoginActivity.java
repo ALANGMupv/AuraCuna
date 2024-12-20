@@ -96,7 +96,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private void verificaSiUsuarioValidado() {
         if (auth.getCurrentUser() != null) {
-            Intent i = new Intent(this, MainActivity.class);
+            Intent i = new Intent(this, HomePage.class);
             startActivity(i);
             finish();
         }
@@ -111,7 +111,7 @@ public class LoginActivity extends AppCompatActivity {
                     FirebaseUser usuario = auth.getCurrentUser();
                     if (usuario != null && usuario.isEmailVerified()) {
                         // Si el correo está verificado, proceder al inicio de sesión
-                        Intent i = new Intent(LoginActivity.this, MainActivity.class);
+                        Intent i = new Intent(LoginActivity.this, HomePage.class);
                         startActivity(i);
                         finish();
                     } else {

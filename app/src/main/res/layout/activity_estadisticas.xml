@@ -9,7 +9,7 @@
     <com.github.mikephil.charting.charts.LineChart
         android:id="@+id/grafica_ambiente"
         android:layout_width="379dp"
-        android:layout_height="288dp"
+        android:layout_height="248dp"
         android:layout_marginTop="24dp"
         app:layout_constraintEnd_toEndOf="@+id/textView14"
         app:layout_constraintStart_toStartOf="@+id/textView14"
@@ -22,6 +22,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
+        android:fontFamily="@font/quicksand_bold"
         android:text="Monitor ambiental"
         android:textColor="@color/white"
         android:textSize="24dp"
@@ -34,6 +35,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
+        android:fontFamily="@font/quicksand_bold"
         android:text="Estado de la cuna"
         android:textColor="#FFFFFF"
         android:textSize="24dp"
@@ -46,6 +48,7 @@
         android:id="@+id/textView19"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/quicksand_bold"
         android:text="Desocupada"
         android:textColor="#FFFFFF"
         android:textSize="24dp"
@@ -74,6 +77,7 @@
                 android:id="@+id/textView25"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/quicksand_bold"
                 android:text="20"
                 android:textSize="18dp"
                 app:layout_constraintBottom_toBottomOf="@+id/textView24"
@@ -86,6 +90,7 @@
                 android:id="@+id/textView20"
                 android:layout_width="126dp"
                 android:layout_height="31dp"
+                android:fontFamily="@font/quicksand_bold"
                 android:text="Temperatura"
                 android:textSize="20dp"
                 app:layout_constraintBottom_toBottomOf="@+id/textView24"
@@ -99,6 +104,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="32dp"
+                android:fontFamily="@font/quicksand_bold"
                 android:text="23"
                 android:textSize="18dp"
                 app:layout_constraintEnd_toStartOf="@+id/textView25"
@@ -110,6 +116,7 @@
                 android:id="@+id/textView23"
                 android:layout_width="71dp"
                 android:layout_height="28dp"
+                android:fontFamily="@font/quicksand_bold"
                 android:text="Optima"
                 android:textSize="20dp"
                 app:layout_constraintEnd_toEndOf="@+id/textView25"
@@ -121,6 +128,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="32dp"
+                android:fontFamily="@font/quicksand_bold"
                 android:text="AVG"
                 android:textSize="20dp"
                 app:layout_constraintEnd_toEndOf="@+id/textView24"
@@ -133,6 +141,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="32dp"
+                android:fontFamily="@font/quicksand_bold"
                 android:text="Humedad"
                 android:textSize="20dp"
                 app:layout_constraintEnd_toEndOf="@+id/textView20"
@@ -144,6 +153,7 @@
                 android:id="@+id/textView27"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/quicksand_bold"
                 android:text="35"
                 android:textSize="18dp"
                 app:layout_constraintBottom_toBottomOf="@+id/textView21"
@@ -156,6 +166,7 @@
                 android:id="@+id/textView26"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/quicksand_bold"
                 android:text="40"
                 android:textSize="18dp"
                 app:layout_constraintBottom_toBottomOf="@+id/textView21"
@@ -166,7 +177,19 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
+
+
     </androidx.cardview.widget.CardView>
 
+
+    <include
+        android:id="@+id/profileLayout"
+        layout="@layout/activity_profile"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/scrollView" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
