@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -292,9 +293,9 @@ public class HomePage extends AppCompatActivity {
 
         if (requestCode == 1) { // Código de solicitud de permiso
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                Log.i("Permiso", "Permiso de notificaciones concedido.");
+                Toast.makeText(this, "Permiso de notificaciones concedido.", Toast.LENGTH_SHORT).show();
             } else {
-                Log.w("Permiso", "Permiso de notificaciones denegado.");
+                Toast.makeText(this, "Permiso de notificaciones concedido.", Toast.LENGTH_SHORT).show();
                 // Puedes notificar al usuario que las notificaciones no funcionarán correctamente
             }
         }
