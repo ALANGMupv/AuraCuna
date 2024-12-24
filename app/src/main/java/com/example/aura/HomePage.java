@@ -8,34 +8,43 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
-import androidx.core.content.ContextCompat;
 
+import com.google.android.exoplayer2.upstream.ByteArrayDataSource;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 
+import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
+import org.eclipse.paho.client.mqttv3.MqttCallback;
 import org.eclipse.paho.client.mqttv3.MqttClient;
 import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
 
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+
+import com.google.android.exoplayer2.ExoPlayer;
+import com.google.android.exoplayer2.MediaItem;
+import com.google.android.exoplayer2.upstream.DataSource;
+import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
+import com.google.android.exoplayer2.ui.PlayerView;
+
 public class HomePage extends AppCompatActivity {
 
-    private static final String BROKER = "tcp://192.168.113.201:1883";
+    private static final String BROKER = "tcp://192.168.1.135:1883";
     private static final String TOPIC_SERVO = "cuna/servo";
     private static final String TOPIC_LUZ = "cuna/luz";
     private static final int QOS = 1;
@@ -55,18 +64,17 @@ public class HomePage extends AppCompatActivity {
     private Button button6;  // Botón para la temperatura
     private Button button7;  // Botón para la humedad
 
+    // CÁMARA
+    private static final String TOPIC_VIDEO = "raspberry/video";  // Tópico de video MQTT
+    private ExoPlayer exoPlayer;
+    private PlayerView playerView;
+    private boolean cunaOcupada = false;
+
     @SuppressLint("ResourceType")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home);
-
-        // Solicitar el permiso de notificación
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.POST_NOTIFICATIONS}, 1);
-            }
-        }
 
         buttonServo = findViewById(R.id.servo);
         buttonLuz = findViewById(R.id.luz);
@@ -91,7 +99,7 @@ public class HomePage extends AppCompatActivity {
         // Image Button para stats
         ImageButton imageButton = findViewById(R.id.imageButton);
         imageButton.setOnClickListener(a -> {
-            Intent stats = new Intent(HomePage.this, EstadisticasActivity.class);
+            Intent stats = new Intent(HomePage.this, HomePage.class);
             startActivity(stats);
         });
 
@@ -103,6 +111,39 @@ public class HomePage extends AppCompatActivity {
         });
 
         obtenerDatosTemperaturaYHumedad();
+
+        // CÁMARA
+        playerView = findViewById(R.id.videoPlayer);  // Referencia a PlayerView
+
+        // Configuración del reproductor
+        exoPlayer = new ExoPlayer.Builder(this).build();
+        playerView.setPlayer(exoPlayer);
+    }
+
+    private void bebeEnCuna() {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("Cunas").document("cuna1") // Accede directamente al documento "cuna1"
+                .get()
+                .addOnSuccessListener(documentSnapshot -> {
+                    if (documentSnapshot.exists()) {
+                        String estadoCuna = documentSnapshot.getString("estadoCuna");
+
+                        // Actualizar la variable de estado de la cuna
+                        cunaOcupada = "ocupada".equals(estadoCuna);
+
+                        // Activar o desactivar la cámara según el estado de la cuna
+                        if (cunaOcupada) {
+                            // Si la cuna está ocupada, activar la cámara
+                            activarCamara();
+                        } else {
+                            // Si la cuna no está ocupada, desactivar la cámara
+                            detenerCamara();
+                        }
+                    }
+                })
+                .addOnFailureListener(e -> {
+                    Log.e("FirestoreError", "Error al cargar estado de la cuna", e);
+                });
     }
 
     private void obtenerDatosTemperaturaYHumedad() {
@@ -130,23 +171,92 @@ public class HomePage extends AppCompatActivity {
 
     private void setupMQTT() {
         try {
+            // Generar el clientId y crear el cliente MQTT
             String clientId = MqttClient.generateClientId();
             client = new MqttClient(BROKER, clientId, null);
+
+            // Configurar opciones de conexión
             options = new MqttConnectOptions();
             options.setCleanSession(true);
             options.setAutomaticReconnect(true);
 
+            // Conectar al broker MQTT
             client.connect(options);
             Log.i("MQTT", "Conexión al broker MQTT exitosa.");
 
+            // Suscripción a los tópicos necesarios
             client.subscribe(TOPIC_SERVO);
             client.subscribe(TOPIC_LUZ);
+            client.subscribe(TOPIC_VIDEO); // Suscripción al tópico de video
+
+            // Configurar el callback para manejar los mensajes MQTT
+            client.setCallback(new MqttCallback() {
+                @Override
+                public void connectionLost(Throwable cause) {
+                    Log.e("MQTT", "Conexión perdida: " + cause.getMessage());
+                }
+
+                @Override
+                public void messageArrived(String topic, MqttMessage message) throws Exception {
+                    // Verificamos el tópico para asegurarnos de que el mensaje es de video
+                    if (topic.equals(TOPIC_VIDEO)) {
+                        byte[] videoData = message.getPayload(); // Obtener los datos de video como bytes
+                        Log.i("MQTT", "Mensaje de video recibido, tamaño: " + videoData.length);
+
+                        // Solo reproducir el video si la cuna está ocupada
+                        if (cunaOcupada){
+                            playVideo(videoData);
+                            activarCamara();
+                        }
+                        else {
+                            detenerCamara();
+                            Log.i("MQTT", "La cuna no está ocupada, no se reproducirá el video."); }
+                    }
+                }
+
+                @Override
+                public void deliveryComplete(IMqttDeliveryToken token) {
+                    // No es necesario manejar esto para este caso
+                }
+            });
 
         } catch (MqttException e) {
             Log.e("MQTT", "Error al conectar al broker: " + e.getMessage(), e);
-            reconnectMQTT();
+            reconnectMQTT(); // Intentar reconectar en caso de error
         }
     }
+
+    // CÁMARA
+    private void playVideo(byte[] videoData) {
+        ByteArrayDataSource byteArrayDataSource = new ByteArrayDataSource(videoData);  // Directly pass the byte[] array
+
+        // Aquí indicamos el formato del video. Este ejemplo asume que es un video H264.
+        MediaItem mediaItem = new MediaItem.Builder()
+                .setUri(byteArrayDataSource.getUri())  // Extract URI from ByteArrayDataSource
+                .setMimeType("video/mp4")
+                .build();
+
+        // Preparar y reproducir el video
+        exoPlayer.setMediaItem(mediaItem);
+        exoPlayer.prepare();
+        exoPlayer.play();
+    }
+
+
+    private void activarCamara() {
+        if (exoPlayer != null && !exoPlayer.isPlaying()) {
+            playerView.setVisibility(View.VISIBLE); // Hacemos visible el reproductor
+        }
+    }
+
+    private void detenerCamara() {
+        if (exoPlayer != null) {
+            exoPlayer.stop();
+            playerView.setVisibility(View.INVISIBLE); // Ocultamos el reproductor
+        }
+    }
+
+    // SERVO
 
     private void toggleServo() {
         new Thread(() -> {
@@ -286,21 +396,6 @@ public class HomePage extends AppCompatActivity {
             notificationManager.createNotificationChannel(channel);
         }
     }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-
-        if (requestCode == 1) { // Código de solicitud de permiso
-            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                Toast.makeText(this, "Permiso de notificaciones concedido.", Toast.LENGTH_SHORT).show();
-            } else {
-                Toast.makeText(this, "Permiso de notificaciones concedido.", Toast.LENGTH_SHORT).show();
-                // Puedes notificar al usuario que las notificaciones no funcionarán correctamente
-            }
-        }
-    }
-
 
     private void reconnectMQTT() {
         if (!isReconnecting) {

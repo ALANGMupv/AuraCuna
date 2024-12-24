@@ -1,7 +1,7 @@
 plugins {
     id 'com.android.application'
     id 'com.google.gms.google-services'
-}//
+}
 
 android {
     namespace 'com.example.aura'
@@ -23,6 +23,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -30,8 +31,10 @@ android {
 }
 
 dependencies {
-    implementation("com.android.volley:volley:1.2.1")
-    implementation("com.android.volley:volley:1.2.1")
+    // Volley
+    implementation "com.android.volley:volley:1.2.1"
+
+    // Librerías de soporte
     implementation libs.appcompat
     implementation libs.material
     implementation libs.activity
@@ -41,28 +44,4 @@ dependencies {
     testImplementation libs.junit
     androidTestImplementation libs.ext.junit
     androidTestImplementation libs.espresso.core
-    implementation platform('com.google.firebase:firebase-bom:33.5.0')
-    implementation("com.google.firebase:firebase-auth")
-    implementation("com.google.android.gms:play-services-auth:21.0.0")
-    implementation 'com.google.firebase:firebase-auth:23.1.0'
-    // Añade esta línea
-    implementation 'com.firebaseui:firebase-ui-auth:8.0.0' // Asegúrate de usar la última versión
-    implementation platform('com.google.firebase:firebase-bom:33.5.1')
-    implementation("com.google.firebase:firebase-firestore:25.1.1")
-    implementation 'com.google.android.gms:play-services-auth:20.7.0'
-    implementation 'com.github.bumptech.glide:glide:4.12.0'
-    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
-    implementation 'com.google.android.gms:play-services-base:18.1.0'
-    implementation 'com.google.android.gms:play-services-oss-licenses:17.0.0' // Si usas licencias abiertas
-    annotationProcessor 'com.github.bumptech.glide:compiler:4.12.0'
-    implementation 'com.google.android.exoplayer:exoplayer:2.19.0'
-    implementation 'org.eclipse.paho:org.eclipse.paho.client.mqttv3:1.2.5'
-    implementation 'androidx.recyclerview:recyclerview:1.2.1'
-    // Recycler
-    implementation 'com.google.firebase:firebase-firestore:24.7.1'
-    implementation 'com.github.bumptech.glide:glide:4.15.1'
-    annotationProcessor 'com.github.bumptech.glide:compiler:4.15.1'
-
 }
-
-
