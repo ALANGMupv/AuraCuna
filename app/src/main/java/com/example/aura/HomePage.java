@@ -122,7 +122,7 @@ public class HomePage extends AppCompatActivity {
         playerView.setPlayer(player);
 
         // URL del stream (ajusta a tu IP y puerto)
-        String streamUrl = "udp://192.168.1.140:8554";
+        String streamUrl = "rtsp://192.168.1.140:8554/test";
         Uri uri = Uri.parse(streamUrl);
 
         // Crea un MediaItem y configúralo en el reproductor
