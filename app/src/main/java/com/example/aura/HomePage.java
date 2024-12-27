@@ -9,6 +9,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -33,6 +34,10 @@ import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
 
+import com.google.android.exoplayer2.ExoPlayer;
+import com.google.android.exoplayer2.MediaItem;
+import com.google.android.exoplayer2.ui.PlayerView;
+
 public class HomePage extends AppCompatActivity {
 
     private static final String BROKER = "tcp://192.168.113.201:1883";
@@ -54,6 +59,10 @@ public class HomePage extends AppCompatActivity {
 
     private Button button6;  // Botón para la temperatura
     private Button button7;  // Botón para la humedad
+
+    // Cámara
+    private ExoPlayer player;
+    private PlayerView playerView;
 
     @SuppressLint("ResourceType")
     @Override
@@ -103,7 +112,36 @@ public class HomePage extends AppCompatActivity {
         });
 
         obtenerDatosTemperaturaYHumedad();
+
+        // Cámara
+        // Vincula la vista del reproductor
+        playerView = findViewById(R.id.videoPlayer);
+
+        // Inicializa ExoPlayer
+        player = new ExoPlayer.Builder(this).build();
+        playerView.setPlayer(player);
+
+        // URL del stream (ajusta a tu IP y puerto)
+        String streamUrl = "udp://192.168.1.140:8554";
+        Uri uri = Uri.parse(streamUrl);
+
+        // Crea un MediaItem y configúralo en el reproductor
+        MediaItem mediaItem = MediaItem.fromUri(uri);
+        player.setMediaItem(mediaItem);
+
+        // Prepara e inicia la reproducción
+        player.prepare();
+        player.play();
     }
+
+    // onDestroy cámara
+    protected void onDestroy() {
+        super.onDestroy();
+        if (player != null) {
+            player.release();
+        }
+    }
+
 
     private void obtenerDatosTemperaturaYHumedad() {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
