@@ -67,6 +67,7 @@
 
             <TextView
                 android:id="@+id/textMC"
+                style="@style/SecondaryTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
@@ -74,11 +75,10 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/videoPlayer"
-                style="@style/SecondaryTextView" />
+                app:layout_constraintTop_toBottomOf="@+id/videoPlayer" />
 
             <Button
-                android:id="@+id/button2"
+                android:id="@+id/luz"
                 style="@style/RoundedButton"
                 android:layout_width="0dp"
                 android:layout_height="80dp"
@@ -86,13 +86,13 @@
                 android:layout_marginTop="20dp"
                 android:layout_marginEnd="10dp"
                 android:drawableTop="@mipmap/ic_luz"
-                app:layout_constraintEnd_toStartOf="@+id/button3"
+                app:layout_constraintEnd_toStartOf="@+id/servo"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textMC" />
 
             <Button
-                android:id="@+id/button3"
+                android:id="@+id/servo"
                 style="@style/RoundedButton"
                 android:layout_width="0dp"
                 android:layout_height="80dp"
@@ -101,7 +101,7 @@
                 android:drawableTop="@mipmap/ic_cuna"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/button2"
+                app:layout_constraintStart_toEndOf="@+id/luz"
                 app:layout_constraintTop_toBottomOf="@+id/textMC" />
 
             <Button
@@ -111,8 +111,8 @@
                 android:layout_height="80dp"
                 android:layout_marginTop="16dp"
                 android:drawableTop="@mipmap/ic_music"
-                app:layout_constraintEnd_toEndOf="@+id/button2"
-                app:layout_constraintStart_toStartOf="@+id/button2"
+                app:layout_constraintEnd_toEndOf="@+id/luz"
+                app:layout_constraintStart_toStartOf="@+id/luz"
                 app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
             <Button
@@ -123,8 +123,8 @@
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="16dp"
                 android:drawableTop="@mipmap/ic_mic"
-                app:layout_constraintEnd_toEndOf="@+id/button3"
-                app:layout_constraintStart_toEndOf="@+id/button2"
+                app:layout_constraintEnd_toEndOf="@+id/servo"
+                app:layout_constraintStart_toEndOf="@+id/luz"
                 app:layout_constraintTop_toBottomOf="@+id/apellidos" />
 
             <Button
@@ -133,8 +133,8 @@
                 android:layout_width="0dp"
                 android:layout_height="60dp"
                 android:layout_marginTop="20dp"
-                android:text="Ej"
                 android:drawableLeft="@mipmap/ic_temp"
+                android:text="Ej"
                 app:layout_constraintEnd_toEndOf="@+id/button4"
                 app:layout_constraintStart_toStartOf="@+id/button4"
                 app:layout_constraintTop_toBottomOf="@+id/textView7" />
@@ -146,34 +146,34 @@
                 android:layout_height="60dp"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="20dp"
-                android:text="Ej"
                 android:drawableLeft="@mipmap/ic_hum"
+                android:text="Ej"
                 app:layout_constraintEnd_toEndOf="@+id/button5"
                 app:layout_constraintStart_toEndOf="@+id/button4"
                 app:layout_constraintTop_toBottomOf="@+id/textView8" />
 
             <TextView
                 android:id="@+id/textView4"
+                style="@style/SecondaryTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:text="Luz de cuna"
-                app:layout_constraintEnd_toEndOf="@+id/button2"
+                app:layout_constraintEnd_toEndOf="@+id/luz"
                 app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="@+id/button2"
-                app:layout_constraintTop_toBottomOf="@+id/button2"
-                style="@style/SecondaryTextView" />
+                app:layout_constraintStart_toStartOf="@+id/luz"
+                app:layout_constraintTop_toBottomOf="@+id/luz" />
 
             <TextView
                 android:id="@+id/apellidos"
+                style="@style/SecondaryTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:text="Mecimiento de cuna"
-                app:layout_constraintEnd_toEndOf="@+id/button3"
-                app:layout_constraintStart_toStartOf="@+id/button3"
-                app:layout_constraintTop_toBottomOf="@+id/button3"
-                style="@style/SecondaryTextView" />
+                app:layout_constraintEnd_toEndOf="@+id/servo"
+                app:layout_constraintStart_toStartOf="@+id/servo"
+                app:layout_constraintTop_toBottomOf="@+id/servo" />
 
             <TextView
                 android:id="@+id/textView7"
@@ -203,25 +203,25 @@
 
             <TextView
                 android:id="@+id/textView5"
+                style="@style/SecondaryTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:text="Temperatura"
                 app:layout_constraintEnd_toEndOf="@+id/button6"
                 app:layout_constraintStart_toStartOf="@+id/button6"
-                app:layout_constraintTop_toBottomOf="@+id/button6"
-                style="@style/SecondaryTextView" />
+                app:layout_constraintTop_toBottomOf="@+id/button6" />
 
             <TextView
                 android:id="@+id/textView9"
+                style="@style/SecondaryTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:text="Humedad"
                 app:layout_constraintEnd_toEndOf="@+id/button7"
                 app:layout_constraintStart_toStartOf="@+id/button7"
-                app:layout_constraintTop_toBottomOf="@+id/button7"
-                style="@style/SecondaryTextView" />
+                app:layout_constraintTop_toBottomOf="@+id/button7" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
