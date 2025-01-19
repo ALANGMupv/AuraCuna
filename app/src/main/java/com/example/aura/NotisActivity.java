@@ -1,10 +1,15 @@
 package com.example.aura;
 
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -25,6 +30,10 @@ public class NotisActivity extends AppCompatActivity {
     private List<Notis> notisList;
     private FirebaseFirestore firestore;
 
+    private NotificationManager notificationManager;
+
+    private static final String CANAL_ID = "mi_canal";
+    private static final int NOTIFICACION_ID = 1;
 
     private final double TEMP_MIN = 18.0; // Temperatura mínima aceptable
     private final double TEMP_MAX = 24.0; // Temperatura máxima aceptable
@@ -47,6 +56,17 @@ public class NotisActivity extends AppCompatActivity {
 
         // Inicializar Firestore
         firestore = FirebaseFirestore.getInstance();
+
+        // Inicializar NotificationManager
+        notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+
+        // Crear el canal de notificación para Android 8.0 (API 26) o superior
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel notificationChannel = new NotificationChannel(
+                    CANAL_ID, "Notificaciones Sensores", NotificationManager.IMPORTANCE_DEFAULT);
+            notificationChannel.setDescription("Notificaciones de temperatura, humedad y cuna.");
+            notificationManager.createNotificationChannel(notificationChannel);
+        }
 
         // Escuchar cambios en tiempo real
         listenToSensorData();
@@ -76,25 +96,35 @@ public class NotisActivity extends AppCompatActivity {
                             // Verificar las condiciones de la temperatura
                             if (temperatura < TEMP_MIN) {
                                 addNotification("¡Hace mucho frío!", "Temperatura: " + temperatura + "°C. El bebé podría estar incómodo.", time);
+                                sendSystemNotification("¡Hace mucho frío!", "Temperatura: " + temperatura + "°C. El bebé podría estar incómodo.");
                             } else if (temperatura > TEMP_MAX) {
                                 addNotification("¡Hace mucho calor!", "Temperatura: " + temperatura + "°C. El bebé podría estar incómodo.", time);
+                                sendSystemNotification("¡Hace mucho calor!", "Temperatura: " + temperatura + "°C. El bebé podría estar incómodo.");
                             }
 
                             // Verificar las condiciones de la humedad
                             if (humedad < HUMIDITY_MIN) {
                                 addNotification("¡Humedad muy baja!", "Humedad: " + humedad + "%. El ambiente podría estar demasiado seco para el bebé.", time);
+                                sendSystemNotification("¡Humedad muy baja!", "Humedad: " + humedad + "%. El ambiente podría estar demasiado seco para el bebé.");
                             } else if (humedad > HUMIDITY_MAX) {
                                 addNotification("¡Humedad muy alta!", "Humedad: " + humedad + "%. El ambiente podría ser incómodo para el bebé.", time);
+                                sendSystemNotification("¡Humedad muy alta!", "Humedad: " + humedad + "%. El ambiente podría ser incómodo para el bebé.");
                             }
 
-                            // Verificar si el bebé está en la cuna
+                            // Verificar si el bebé está fuera de la cuna
                             if (!enCuna) {
                                 addNotification("Bebé fuera de la cuna", "El sensor indica que el bebé no está en la cuna.", time);
+                                sendSystemNotification("Bebé fuera de la cuna", "El sensor indica que el bebé no está en la cuna.");
+                            } else {
+                                // Si el bebé está en la cuna, mostrar notificación
+                                addNotification("Bebé en la cuna", "El bebé está en la cuna.", time);
+                                sendSystemNotification("Bebé en la cuna", "El bebé está en la cuna.");
                             }
                         }
                     }
                 });
-    }
+
+}
 
     private void addNotification(String title, String description, String time) {
         // Crear un objeto Notis con la notificación
@@ -105,5 +135,16 @@ public class NotisActivity extends AppCompatActivity {
 
         // Notificar al adaptador que se ha insertado un nuevo item
         adapter.notifyItemInserted(0);
+    }
+
+    private void sendSystemNotification(String title, String description) {
+        // Crear la notificación
+        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this, CANAL_ID)
+                .setContentTitle(title)
+                .setContentText(description)
+                .setSmallIcon(android.R.drawable.ic_popup_reminder);
+
+        // Enviar la notificación
+        notificationManager.notify(NOTIFICACION_ID, notificationBuilder.build());
     }
 }
