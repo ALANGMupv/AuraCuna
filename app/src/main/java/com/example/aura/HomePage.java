@@ -40,7 +40,7 @@ import com.google.android.exoplayer2.ui.PlayerView;
 
 public class HomePage extends AppCompatActivity {
 
-    private static final String BROKER = "tcp://192.168.113.201:1883";
+    private static final String BROKER = "tcp://broker.hivemq.com:1883";
     private static final String TOPIC_SERVO = "cuna/servo";
     private static final String TOPIC_LUZ = "cuna/luz";
     private static final int QOS = 1;
@@ -122,7 +122,7 @@ public class HomePage extends AppCompatActivity {
         playerView.setPlayer(player);
 
         // URL del stream (ajusta a tu IP y puerto)
-        String streamUrl = "rtsp://192.168.1.140:8554/test";
+        String streamUrl = "rtsp://192.168.197.201:8554/test";
         Uri uri = Uri.parse(streamUrl);
 
         // Crea un MediaItem y configúralo en el reproductor
