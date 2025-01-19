@@ -1,5 +1,7 @@
 package com.example.aura;
 
+import static android.content.Context.NOTIFICATION_SERVICE;
+
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -138,6 +140,7 @@ public class NotisActivity extends AppCompatActivity {
     }
 
     private void sendSystemNotification(String title, String description) {
+        int icon = R.mipmap.new_noti;
         // Crear la notificación
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this, CANAL_ID)
                 .setContentTitle(title)
@@ -147,4 +150,21 @@ public class NotisActivity extends AppCompatActivity {
         // Enviar la notificación
         notificationManager.notify(NOTIFICACION_ID, notificationBuilder.build());
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        // Restaurar el ícono normal cuando el usuario entra a ver las notificaciones
+        int icon = R.mipmap.ic_noti; // Ícono normal
+
+        // Crear y actualizar la notificación con el ícono normal
+        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this, CANAL_ID)
+                .setContentTitle("Notificaciones vistas")
+                .setContentText("Has abierto las notificaciones.")
+                .setSmallIcon(icon); // Aquí asignamos el ícono normal
+
+        notificationManager.notify(NOTIFICACION_ID, notificationBuilder.build());
+    }
+
 }
