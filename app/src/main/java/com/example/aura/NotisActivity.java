@@ -25,8 +25,11 @@ public class NotisActivity extends AppCompatActivity {
     private List<Notis> notisList;
     private FirebaseFirestore firestore;
 
-    private final double TEMP_MIN = 20.0; // Temperatura mínima aceptable
-    private final double TEMP_MAX = 30.0; // Temperatura máxima aceptable
+
+    private final double TEMP_MIN = 18.0; // Temperatura mínima aceptable
+    private final double TEMP_MAX = 24.0; // Temperatura máxima aceptable
+    private final double HUMIDITY_MIN = 35.0; // Humedad mínima aceptable
+    private final double HUMIDITY_MAX = 60.0; // Humedad máxima aceptable
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +66,7 @@ public class NotisActivity extends AppCompatActivity {
                         if (change.getType() == DocumentChange.Type.ADDED || change.getType() == DocumentChange.Type.MODIFIED) {
                             // Obtener los datos del documento
                             double temperatura = change.getDocument().getDouble("temperatura");
+                            double humedad = change.getDocument().getDouble("humedad");
                             boolean enCuna = change.getDocument().getBoolean("enCuna");
                             Date timestamp = change.getDocument().getTimestamp("timestamp").toDate();
 
@@ -74,6 +78,13 @@ public class NotisActivity extends AppCompatActivity {
                                 addNotification("¡Hace mucho frío!", "Temperatura: " + temperatura + "°C. El bebé podría estar incómodo.", time);
                             } else if (temperatura > TEMP_MAX) {
                                 addNotification("¡Hace mucho calor!", "Temperatura: " + temperatura + "°C. El bebé podría estar incómodo.", time);
+                            }
+
+                            // Verificar las condiciones de la humedad
+                            if (humedad < HUMIDITY_MIN) {
+                                addNotification("¡Humedad muy baja!", "Humedad: " + humedad + "%. El ambiente podría estar demasiado seco para el bebé.", time);
+                            } else if (humedad > HUMIDITY_MAX) {
+                                addNotification("¡Humedad muy alta!", "Humedad: " + humedad + "%. El ambiente podría ser incómodo para el bebé.", time);
                             }
 
                             // Verificar si el bebé está en la cuna
