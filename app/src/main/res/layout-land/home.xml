@@ -48,6 +48,22 @@
                 app:layout_constraintWidth_percent="0.8"
                 app:use_controller="true" />
 
+            <TextView
+                android:id="@+id/videoPlaceholderText"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="10dp"
+                android:text="El bebé no está en la cuna"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                android:gravity="center"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHeight_percent="0.3"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/customSpinner"
+                app:layout_constraintWidth_percent="0.8"
+                android:visibility="invisible" />
+
             <Button
                 android:id="@+id/botonNotif"
                 android:layout_width="wrap_content"

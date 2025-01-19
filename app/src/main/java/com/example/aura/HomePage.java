@@ -16,6 +16,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -163,18 +164,22 @@ public class HomePage extends AppCompatActivity {
                         button6.setText(temperatura + "°C");
                         button7.setText(humedad + "%");
 
-                        // Mostrar u ocultar el reproductor según el estado
+                        TextView placeholderText = findViewById(R.id.videoPlaceholderText);
+
                         if ("ocupada".equals(estado)) {
-                            playerView.setVisibility(View.VISIBLE); // Mostrar el reproductor
+                            playerView.setVisibility(View.VISIBLE);  // Mostrar el reproductor
+                            placeholderText.setVisibility(View.INVISIBLE); // Ocultar el texto
                             if (player != null && !player.isPlaying()) {
                                 player.play();
                             }
                         } else {
                             playerView.setVisibility(View.INVISIBLE); // Ocultar el reproductor
+                            placeholderText.setVisibility(View.VISIBLE); // Mostrar el texto
                             if (player != null && player.isPlaying()) {
                                 player.pause();
                             }
                         }
+
                     }
                 });
     }
