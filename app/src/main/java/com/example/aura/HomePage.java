@@ -13,6 +13,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Toast;
@@ -147,20 +148,32 @@ public class HomePage extends AppCompatActivity {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("Cunas")
                 .document("cuna1")
-                .addSnapshotListener(new EventListener<DocumentSnapshot>() {
-                    @Override
-                    public void onEvent(DocumentSnapshot documentSnapshot, FirebaseFirestoreException e) {
-                        if (e != null) {
-                            Log.w("Firestore", "Error al escuchar los datos.", e);
-                            return;
-                        }
-                        if (documentSnapshot != null && documentSnapshot.exists()) {
-                            double temperatura = documentSnapshot.getDouble("temperatura");
-                            double humedad = documentSnapshot.getDouble("humedad");
+                .addSnapshotListener((documentSnapshot, e) -> {
+                    if (e != null) {
+                        Log.w("Firestore", "Error al escuchar los datos.", e);
+                        return;
+                    }
+                    if (documentSnapshot != null && documentSnapshot.exists()) {
+                        // Obtener los valores de temperatura, humedad y estado
+                        double temperatura = documentSnapshot.getDouble("temperatura");
+                        double humedad = documentSnapshot.getDouble("humedad");
+                        String estado = documentSnapshot.getString("estadoCuna");
 
-                            // Actualizar los botones con los valores de temperatura y humedad
-                            button6.setText(temperatura + "°C");
-                            button7.setText(humedad + "%");
+                        // Actualizar botones
+                        button6.setText(temperatura + "°C");
+                        button7.setText(humedad + "%");
+
+                        // Mostrar u ocultar el reproductor según el estado
+                        if ("ocupada".equals(estado)) {
+                            playerView.setVisibility(View.VISIBLE); // Mostrar el reproductor
+                            if (player != null && !player.isPlaying()) {
+                                player.play();
+                            }
+                        } else {
+                            playerView.setVisibility(View.INVISIBLE); // Ocultar el reproductor
+                            if (player != null && player.isPlaying()) {
+                                player.pause();
+                            }
                         }
                     }
                 });
