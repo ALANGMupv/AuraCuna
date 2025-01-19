@@ -9,11 +9,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -32,9 +34,13 @@ import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
 
+import com.google.android.exoplayer2.ExoPlayer;
+import com.google.android.exoplayer2.MediaItem;
+import com.google.android.exoplayer2.ui.PlayerView;
+
 public class HomePage extends AppCompatActivity {
 
-    private static final String BROKER = "tcp://192.168.113.201:1883";
+    private static final String BROKER = "tcp://broker.hivemq.com:1883";
     private static final String TOPIC_SERVO = "cuna/servo";
     private static final String TOPIC_LUZ = "cuna/luz";
     private static final int QOS = 1;
@@ -53,6 +59,10 @@ public class HomePage extends AppCompatActivity {
 
     private Button button6;  // Botón para la temperatura
     private Button button7;  // Botón para la humedad
+
+    // Cámara
+    private ExoPlayer player;
+    private PlayerView playerView;
 
     @SuppressLint("ResourceType")
     @Override
@@ -102,7 +112,36 @@ public class HomePage extends AppCompatActivity {
         });
 
         obtenerDatosTemperaturaYHumedad();
+
+        // Cámara
+        // Vincula la vista del reproductor
+        playerView = findViewById(R.id.videoPlayer);
+
+        // Inicializa ExoPlayer
+        player = new ExoPlayer.Builder(this).build();
+        playerView.setPlayer(player);
+
+        // URL del stream (ajusta a tu IP y puerto)
+        String streamUrl = "rtsp://192.168.197.201:8554/test";
+        Uri uri = Uri.parse(streamUrl);
+
+        // Crea un MediaItem y configúralo en el reproductor
+        MediaItem mediaItem = MediaItem.fromUri(uri);
+        player.setMediaItem(mediaItem);
+
+        // Prepara e inicia la reproducción
+        player.prepare();
+        player.play();
     }
+
+    // onDestroy cámara
+    protected void onDestroy() {
+        super.onDestroy();
+        if (player != null) {
+            player.release();
+        }
+    }
+
 
     private void obtenerDatosTemperaturaYHumedad() {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -292,9 +331,9 @@ public class HomePage extends AppCompatActivity {
 
         if (requestCode == 1) { // Código de solicitud de permiso
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                Log.i("Permiso", "Permiso de notificaciones concedido.");
+                Toast.makeText(this, "Permiso de notificaciones concedido.", Toast.LENGTH_SHORT).show();
             } else {
-                Log.w("Permiso", "Permiso de notificaciones denegado.");
+                Toast.makeText(this, "Permiso de notificaciones concedido.", Toast.LENGTH_SHORT).show();
                 // Puedes notificar al usuario que las notificaciones no funcionarán correctamente
             }
         }
