@@ -1,4 +1,4 @@
-package com.example.auraCuna;
+package com.example.auraCuna.casos_uso;
 
 import android.os.Bundle;
 import android.widget.Toast;
@@ -7,6 +7,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.auraCuna.R;
+import com.example.auraCuna.datos.TiendaAdaptador;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 

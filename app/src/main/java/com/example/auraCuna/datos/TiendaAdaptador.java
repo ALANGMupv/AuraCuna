@@ -1,4 +1,4 @@
-package com.example.auraCuna;
+package com.example.auraCuna.datos;
 
 import android.content.Intent;
 import android.graphics.Color;
@@ -12,6 +12,8 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.auraCuna.R;
+import com.example.auraCuna.casos_uso.Tienda;
 
 import java.util.List;
 

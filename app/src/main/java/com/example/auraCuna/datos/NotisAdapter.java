@@ -1,4 +1,4 @@
-package com.example.auraCuna;
+package com.example.auraCuna.datos;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,6 +7,9 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.auraCuna.R;
+import com.example.auraCuna.model.Notis;
 
 import java.util.List;
 

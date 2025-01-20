@@ -1,4 +1,4 @@
-package com.example.auraCuna;
+package com.example.auraCuna.casos_uso;
 
 
 
@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.auraCuna.R;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;

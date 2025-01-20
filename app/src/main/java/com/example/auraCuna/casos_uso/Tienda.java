@@ -1,4 +1,4 @@
-package com.example.auraCuna;
+package com.example.auraCuna.casos_uso;
 
 public class Tienda {
     private String nombre;

@@ -21,7 +21,7 @@
         tools:targetApi="31">
 
         <activity
-            android:name=".LoginActivity"
+            android:name=".casos_uso.LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -34,40 +34,40 @@
             android:name=".MainActivity" />
 
         <activity
-            android:name=".RegistroActivity" />
+            android:name=".casos_uso.RegistroActivity" />
 
         <activity
-            android:name=".TwitterActivity" />
+            android:name=".casos_uso.TwitterActivity" />
 
         <activity
-            android:name=".ReestablecerContraseñaActivity" />
+            android:name=".casos_uso.ReestablecerContraseñaActivity" />
 
         <activity
-            android:name=".ConfiguracionActivity" />
+            android:name=".casos_uso.ConfiguracionActivity" />
 
         <activity
-            android:name=".PerfilActivity" />
+            android:name=".casos_uso.PerfilActivity" />
 
-        <activity android:name=".EstadisticasActivity" />
+        <activity android:name=".casos_uso.EstadisticasActivity" />
 
-        <activity android:name=".RecyclerActivity" />
+        <activity android:name=".casos_uso.RecyclerActivity" />
 
         <activity
-            android:name=".HomePage"
+            android:name=".casos_uso.HomePage"
             android:configChanges="orientation|screenSize"
             android:exported="true" />
 
-        <activity android:name=".AcercaDeActivity"
+        <activity android:name=".casos_uso.AcercaDeActivity"
             android:label="Acerca de ..."
             android:theme="@style/Theme.AppCompat.Light.Dialog"
             />
 
-        <activity android:name=".EditarDatosPersonalesActivity"
+        <activity android:name=".casos_uso.EditarDatosPersonalesActivity"
             android:label="Editar datos personales"
             android:theme="@style/PopupTheme"
             />
 
-        <activity android:name=".CambiarContrasenyaActivity"
+        <activity android:name=".casos_uso.CambiarContrasenyaActivity"
             android:label= "Cambiar contraseña"
             android:theme="@style/PopupTheme"
             />
@@ -76,7 +76,7 @@
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
 
-        <activity android:name=".NotisActivity"
+        <activity android:name=".casos_uso.NotisActivity"
             android:label="Notificaciones"
             android:exported="true"
             />

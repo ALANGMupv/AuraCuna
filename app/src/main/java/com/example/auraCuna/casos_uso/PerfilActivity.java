@@ -1,7 +1,8 @@
-package com.example.auraCuna;
+package com.example.auraCuna.casos_uso;
 
 
 import com.bumptech.glide.Glide;
+import com.example.auraCuna.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;

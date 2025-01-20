@@ -1,4 +1,4 @@
-package com.example.auraCuna;
+package com.example.auraCuna.casos_uso;
 
 import android.annotation.SuppressLint;
 import android.app.Notification;
@@ -25,6 +25,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
 import androidx.core.content.ContextCompat;
 
+import com.example.auraCuna.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.FirebaseFirestore;
 

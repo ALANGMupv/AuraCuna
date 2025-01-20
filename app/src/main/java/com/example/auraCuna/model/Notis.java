@@ -1,4 +1,4 @@
-package com.example.auraCuna;
+package com.example.auraCuna.model;
 
 public class Notis {
     private String title;

@@ -1,23 +1,20 @@
-package com.example.auraCuna;
+package com.example.auraCuna.casos_uso;
 
-import static android.content.Context.NOTIFICATION_SERVICE;
-
-import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.firebase.firestore.DocumentChange;
+import com.example.auraCuna.R;
+import com.example.auraCuna.model.Notis;
+import com.example.auraCuna.datos.NotisAdapter;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.Query;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
