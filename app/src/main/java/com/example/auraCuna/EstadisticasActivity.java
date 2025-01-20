@@ -1,3 +1,4 @@
+
 package com.example.auraCuna;
 
 import android.content.Intent;
@@ -114,7 +115,6 @@ public class EstadisticasActivity extends AppCompatActivity {
                     double sumaTemperatura = 0;
                     double sumaHumedad = 0;
                     int count = 0;
-
                     int index = 0;
 
                     // Primero obtener todos los documentos
