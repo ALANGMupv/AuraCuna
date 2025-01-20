@@ -40,11 +40,14 @@ import com.google.android.exoplayer2.ui.PlayerView;
 public class HomePage extends AppCompatActivity {
 
     private static final String BROKER = "tcp://broker.hivemq.com:1883";
+    private static final String BROKERMUSICA = "tcp://mqtt.eclipseprojects.io:1883";
     private static final String TOPIC_SERVO = "cuna/servo";
     private static final String TOPIC_LUZ = "cuna/luz";
+    private static final String TOPIC_MUSICA = "cuna/musica";
     private static final int QOS = 1;
 
     private MqttClient client;
+    private MqttClient musicClient; // Cliente MQTT para música
     private MqttConnectOptions options;
 
     // Botones
@@ -91,6 +94,7 @@ public class HomePage extends AppCompatActivity {
 
         // Configuración MQTT en un hilo separado
         new Thread(() -> setupMQTT()).start();
+        new Thread(() -> setupMusicMQTT()).start();
 
         createNotificationChannel();
 
@@ -149,18 +153,16 @@ public class HomePage extends AppCompatActivity {
     private void toggleMusic() {
         new Thread(() -> {
             try {
-                if (!client.isConnected()) {
-                    Log.w("MQTT", "El cliente no está conectado. Intentando reconectar...");
-                    reconnectMQTT();
+                if (!musicClient.isConnected()) {
+                    Log.w("MQTT", "El cliente de música no está conectado. Intentando reconectar...");
+                    reconnectMusicMQTT();
                     return;
                 }
 
                 isMusicPlaying = !isMusicPlaying;
 
                 String message = isMusicPlaying ? "1" : "0"; // "1" para activar, "0" para desactivar
-                String topic = "cuna/musica"; // Tópico para la música
-
-                client.publish(topic, new MqttMessage(message.getBytes())); // Enviar comando
+                musicClient.publish(TOPIC_MUSICA, new MqttMessage(message.getBytes())); // Enviar comando
 
                 Log.i("MQTT", "Estado de la música cambiado: " + message);
 
@@ -177,11 +179,38 @@ public class HomePage extends AppCompatActivity {
                 });
 
             } catch (MqttException e) {
-                Log.e("MQTT", "Error al enviar comando MQTT: " + e.getMessage(), e);
+                Log.e("MQTT", "Error al enviar comando MQTT de música: " + e.getMessage(), e);
             }
         }).start();
     }
 
+    private void setupMusicMQTT() {
+        try {
+            String clientId = MqttClient.generateClientId();
+            musicClient = new MqttClient(BROKERMUSICA, clientId, null);
+            options = new MqttConnectOptions();
+            options.setCleanSession(true);
+            options.setAutomaticReconnect(true);
+
+            musicClient.connect(options);
+            Log.i("MQTT", "Conexión al broker MQTT de música exitosa.");
+        } catch (MqttException e) {
+            Log.e("MQTT", "Error al conectar al broker de música: " + e.getMessage(), e);
+            reconnectMusicMQTT();
+        }
+    }
+
+    private void reconnectMusicMQTT() {
+        try {
+            if (!musicClient.isConnected()) {
+                Log.i("MQTT", "Intentando reconectar al broker de música...");
+                musicClient.connect(options);
+                Log.i("MQTT", "Reconectado al broker de música.");
+            }
+        } catch (MqttException e) {
+            Log.e("MQTT", "Error al reconectar al broker de música: " + e.getMessage(), e);
+        }
+    }
 
     private void obtenerDatosTemperaturaYHumedad() {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
