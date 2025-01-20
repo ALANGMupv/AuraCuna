@@ -49,7 +49,7 @@ public class TwitterActivity extends HomePage {
         } else {
             // Configurar el proveedor de Twitter para autenticación
             OAuthProvider.Builder provider = OAuthProvider.newBuilder("twitter.com");
-            provider.addCustomParameter("lang", "en"); // Idioma opcional
+            provider.addCustomParameter("lang", "es");
 
             firebaseAuth.startActivityForSignInWithProvider(/* activity= */ this, provider.build())
                     .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
