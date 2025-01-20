@@ -70,17 +70,17 @@
             />
 
         <service
-            android:name=".LuzService"
+            android:name=".datos.LuzService"
             android:enabled="true"
             android:exported="true" />
 
         <service
-            android:name=".MusicaService"
+            android:name=".datos.MusicaService"
             android:enabled="true"
             android:exported="true" />
 
         <service
-            android:name=".ServoService"
+            android:name=".datos.ServoService"
             android:enabled="true"
             android:exported="true" />
 
