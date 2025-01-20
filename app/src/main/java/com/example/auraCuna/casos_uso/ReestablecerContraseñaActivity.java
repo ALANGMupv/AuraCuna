@@ -106,5 +106,12 @@ public class ReestablecerContraseñaActivity extends AppCompatActivity {
         startActivity(intent);
         finish();
     }
-}
 
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(ReestablecerContraseñaActivity.this, LoginActivity.class);
+        startActivity(intent);
+        finish(); // Finaliza la actividad actual para evitar regresar a ella
+    }
+
+}
