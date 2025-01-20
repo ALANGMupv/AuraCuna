@@ -39,28 +39,10 @@ import com.google.android.exoplayer2.ui.PlayerView;
 
 public class HomePage extends AppCompatActivity {
 
-    private static final String BROKER = "tcp://broker.hivemq.com:1883";
-    private static final String BROKERMUSICA = "tcp://mqtt.eclipseprojects.io:1883";
-    private static final String TOPIC_SERVO = "cuna/servo";
-    private static final String TOPIC_LUZ = "cuna/luz";
-    private static final String TOPIC_MUSICA = "cuna/musica";
-    private static final int QOS = 1;
-
-    private MqttClient client;
-    private MqttClient musicClient; // Cliente MQTT para música
-    private MqttConnectOptions options;
-
     // Botones
     private Button buttonServo;
     private Button buttonLuz;
     private Button buttonMusica;
-
-    private boolean isServoMoving = false;
-    private boolean isLuzOn = false;
-    private boolean isReconnecting = false;
-    private boolean isMusicPlaying = false;
-
-    private static final String CHANNEL_ID = "MQTT_Notifications";
 
     private Button button6;  // Botón para la temperatura
     private Button button7;  // Botón para la humedad
@@ -88,15 +70,23 @@ public class HomePage extends AppCompatActivity {
         button7 = findViewById(R.id.button7); // Botón de Humedad
         buttonMusica = findViewById(R.id.button4);
 
-        buttonMusica.setOnClickListener(v -> toggleMusic());
-        buttonServo.setOnClickListener(v -> toggleServo());
-        buttonLuz.setOnClickListener(v -> toggleLuz());
+        buttonServo.setOnClickListener(v -> {
+            Intent servoIntent = new Intent(this, ServoService.class);
+            servoIntent.setAction("TOGGLE_SERVO");
+            startService(servoIntent);
+        });
 
-        // Configuración MQTT en un hilo separado
-        new Thread(() -> setupMQTT()).start();
-        new Thread(() -> setupMusicMQTT()).start();
+        buttonLuz.setOnClickListener(v -> {
+            Intent luzIntent = new Intent(this, LuzService.class);
+            luzIntent.setAction("TOGGLE_LUZ");
+            startService(luzIntent);
+        });
 
-        createNotificationChannel();
+        buttonMusica.setOnClickListener(v -> {
+            Intent musicaIntent = new Intent(this, MusicaService.class);
+            musicaIntent.setAction("TOGGLE_MUSICA");
+            startService(musicaIntent);
+        });
 
         // Floating Action Button (FAB)
         FloatingActionButton fab = findViewById(R.id.fab);
@@ -150,67 +140,6 @@ public class HomePage extends AppCompatActivity {
         }
     }
 
-    private void toggleMusic() {
-        new Thread(() -> {
-            try {
-                if (!musicClient.isConnected()) {
-                    Log.w("MQTT", "El cliente de música no está conectado. Intentando reconectar...");
-                    reconnectMusicMQTT();
-                    return;
-                }
-
-                isMusicPlaying = !isMusicPlaying;
-
-                String message = isMusicPlaying ? "1" : "0"; // "1" para activar, "0" para desactivar
-                musicClient.publish(TOPIC_MUSICA, new MqttMessage(message.getBytes())); // Enviar comando
-
-                Log.i("MQTT", "Estado de la música cambiado: " + message);
-
-                runOnUiThread(() -> {
-                    // Actualiza el texto del botón según el estado
-                    buttonMusica.setText(isMusicPlaying ? "Detener Música" : "Reproducir Música");
-
-                    // Manejar notificaciones
-                    if (isMusicPlaying) {
-                        showMusicNotification();
-                    } else {
-                        cancelMusicNotification();
-                    }
-                });
-
-            } catch (MqttException e) {
-                Log.e("MQTT", "Error al enviar comando MQTT de música: " + e.getMessage(), e);
-            }
-        }).start();
-    }
-
-    private void setupMusicMQTT() {
-        try {
-            String clientId = MqttClient.generateClientId();
-            musicClient = new MqttClient(BROKERMUSICA, clientId, null);
-            options = new MqttConnectOptions();
-            options.setCleanSession(true);
-            options.setAutomaticReconnect(true);
-
-            musicClient.connect(options);
-            Log.i("MQTT", "Conexión al broker MQTT de música exitosa.");
-        } catch (MqttException e) {
-            Log.e("MQTT", "Error al conectar al broker de música: " + e.getMessage(), e);
-            reconnectMusicMQTT();
-        }
-    }
-
-    private void reconnectMusicMQTT() {
-        try {
-            if (!musicClient.isConnected()) {
-                Log.i("MQTT", "Intentando reconectar al broker de música...");
-                musicClient.connect(options);
-                Log.i("MQTT", "Reconectado al broker de música.");
-            }
-        } catch (MqttException e) {
-            Log.e("MQTT", "Error al reconectar al broker de música: " + e.getMessage(), e);
-        }
-    }
 
     private void obtenerDatosTemperaturaYHumedad() {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -251,186 +180,6 @@ public class HomePage extends AppCompatActivity {
                 });
     }
 
-    private void setupMQTT() {
-        try {
-            String clientId = MqttClient.generateClientId();
-            client = new MqttClient(BROKER, clientId, null);
-            options = new MqttConnectOptions();
-            options.setCleanSession(true);
-            options.setAutomaticReconnect(true);
-
-            client.connect(options);
-            Log.i("MQTT", "Conexión al broker MQTT exitosa.");
-
-            client.subscribe(TOPIC_SERVO);
-            client.subscribe(TOPIC_LUZ);
-
-        } catch (MqttException e) {
-            Log.e("MQTT", "Error al conectar al broker: " + e.getMessage(), e);
-            reconnectMQTT();
-        }
-    }
-
-    private void toggleServo() {
-        new Thread(() -> {
-            try {
-                if (!client.isConnected()) {
-                    Log.w("MQTT", "El cliente no está conectado. Intentando reconectar...");
-                    reconnectMQTT();
-                    return;
-                }
-
-                isServoMoving = !isServoMoving;
-
-                String message = isServoMoving ? "1" : "0";
-                client.publish(TOPIC_SERVO, new MqttMessage(message.getBytes()));
-
-                Log.i("MQTT", "Estado del servo cambiado: " + message);
-
-                // Guardar el estado del servo
-                saveServoState(isServoMoving);
-
-                // Mostrar o cancelar la notificación según el estado del servo
-                if (isServoMoving) {
-                    showServoNotification();
-                } else {
-                    cancelServoNotification();
-                }
-
-            } catch (MqttException e) {
-                Log.e("MQTT", "Error al enviar comando MQTT: " + e.getMessage(), e);
-            }
-        }).start();
-    }
-
-    private void toggleLuz() {
-        new Thread(() -> {
-            try {
-                if (!client.isConnected()) {
-                    Log.w("MQTT", "El cliente no está conectado. Intentando reconectar...");
-                    reconnectMQTT();
-                    return;
-                }
-
-                isLuzOn = !isLuzOn;
-
-                String message = isLuzOn ? "1" : "0";
-                client.publish(TOPIC_LUZ, new MqttMessage(message.getBytes()));
-
-                Log.i("MQTT", "Estado de los LEDs cambiado: " + message);
-
-                // Guardar el estado de la luz
-                saveLuzState(isLuzOn);
-
-                // Mostrar o cancelar la notificación según el estado de los LEDs
-                if (isLuzOn) {
-                    showLuzNotification();
-                } else {
-                    cancelLuzNotification();
-                }
-
-            } catch (MqttException e) {
-                Log.e("MQTT", "Error al enviar comando MQTT: " + e.getMessage(), e);
-            }
-        }).start();
-    }
-
-    // Guardar el estado del servo
-    private void saveServoState(boolean isMoving) {
-        SharedPreferences sharedPreferences = getSharedPreferences("DeviceStates", MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putBoolean("servoState", isMoving);
-        editor.apply();
-    }
-
-    // Guardar el estado de la luz
-    private void saveLuzState(boolean isOn) {
-        SharedPreferences sharedPreferences = getSharedPreferences("DeviceStates", MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putBoolean("luzState", isOn);
-        editor.apply();
-    }
-
-    private void showServoNotification() {
-        Intent intent = new Intent(this, HomePage.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_IMMUTABLE);
-
-        Notification notification = new NotificationCompat.Builder(this, CHANNEL_ID)
-                .setContentTitle("Mecimiento de la cuna")
-                .setContentText("La cuna se está moviendo.")
-                .setSmallIcon(R.mipmap.ic_cuna)
-                .setContentIntent(pendingIntent)
-                .build();
-
-        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        notificationManager.notify(1, notification);
-    }
-
-    private void cancelServoNotification() {
-        if (!isServoMoving) {
-            NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-            notificationManager.cancel(1);
-        }
-    }
-
-    private void showLuzNotification() {
-        Intent intent = new Intent(this, HomePage.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_IMMUTABLE);
-
-        Notification notification = new NotificationCompat.Builder(this, CHANNEL_ID)
-                .setContentTitle("Luz del bebé")
-                .setContentText("Las luces están encendidas.")
-                .setSmallIcon(R.mipmap.ic_luz)
-                .setContentIntent(pendingIntent)
-                .build();
-
-        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        notificationManager.notify(2, notification);
-    }
-
-    private void cancelLuzNotification() {
-        if (!isLuzOn) {
-            NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-            notificationManager.cancel(2);
-        }
-    }
-
-    private void showMusicNotification() {
-        Intent intent = new Intent(this, HomePage.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_IMMUTABLE);
-
-        Notification notification = new NotificationCompat.Builder(this, CHANNEL_ID)
-                .setContentTitle("Música de la cuna")
-                .setContentText("La música está reproduciéndose.")
-                .setSmallIcon(R.mipmap.ic_music) // Usa un icono relacionado con la música
-                .setContentIntent(pendingIntent)
-                .build();
-
-        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        notificationManager.notify(3, notification); // ID único para música
-    }
-
-    private void cancelMusicNotification() {
-        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        notificationManager.cancel(3); // Cancela la notificación de música
-    }
-
-
-    private void createNotificationChannel() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            CharSequence name = "MQTT Notifications";
-            String description = "Notificaciones relacionadas con el estado de los dispositivos MQTT";
-            int importance = NotificationManager.IMPORTANCE_DEFAULT;
-            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, name, importance);
-            channel.setDescription(description);
-
-            NotificationManager notificationManager = getSystemService(NotificationManager.class);
-            notificationManager.createNotificationChannel(channel);
-        }
-    }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -443,53 +192,6 @@ public class HomePage extends AppCompatActivity {
                 Toast.makeText(this, "Permiso de notificaciones concedido.", Toast.LENGTH_SHORT).show();
                 // Puedes notificar al usuario que las notificaciones no funcionarán correctamente
             }
-        }
-    }
-
-
-    private void reconnectMQTT() {
-        if (!isReconnecting) {
-            isReconnecting = true;
-            try {
-                if (!client.isConnected()) {
-                    Log.i("MQTT", "Intentando reconectar...");
-                    client.connect(options);
-                    Log.i("MQTT", "Reconectado al broker MQTT.");
-                }
-            } catch (MqttException e) {
-                Log.e("MQTT", "Error al reconectar: " + e.getMessage(), e);
-                try {
-                    Thread.sleep(2000);
-                } catch (InterruptedException ex) {
-                    Thread.currentThread().interrupt();
-                }
-                reconnectMQTT();
-            } finally {
-                isReconnecting = false;
-            }
-        } else {
-            Log.w("MQTT", "Ya hay una reconexión en progreso.");
-        }
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-        SharedPreferences sharedPreferences = getSharedPreferences("DeviceStates", MODE_PRIVATE);
-        isServoMoving = sharedPreferences.getBoolean("servoState", false);
-        isLuzOn = sharedPreferences.getBoolean("luzState", false);
-
-        if (isServoMoving) {
-            showServoNotification();
-        } else {
-            cancelServoNotification();
-        }
-
-        if (isLuzOn) {
-            showLuzNotification();
-        } else {
-            cancelLuzNotification();
         }
     }
 

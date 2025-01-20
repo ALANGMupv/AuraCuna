@@ -31,9 +31,6 @@
         </activity>
 
         <activity
-            android:name=".MainActivity" />
-
-        <activity
             android:name=".RegistroActivity" />
 
         <activity
@@ -72,13 +69,24 @@
             android:theme="@style/PopupTheme"
             />
 
+        <service
+            android:name=".LuzService"
+            android:enabled="true"
+            android:exported="true" />
+
+        <service
+            android:name=".MusicaService"
+            android:enabled="true"
+            android:exported="true" />
+
+        <service
+            android:name=".ServoService"
+            android:enabled="true"
+            android:exported="true" />
+
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
 
-        <activity android:name=".NotisActivity"
-            android:label="Notificaciones"
-            android:exported="true"
-            />
     </application>
 </manifest>
