@@ -85,6 +85,7 @@ public class EditarDatosPersonalesActivity extends AppCompatActivity {
                     });
 
             builder.create().show();
+
         } else {
             // Si no se cambió ningún dato, mostrar mensaje
             Toast.makeText(this, "No se ha modificado ningún dato.", Toast.LENGTH_SHORT).show();
@@ -115,12 +116,15 @@ public class EditarDatosPersonalesActivity extends AppCompatActivity {
                 .update(updates)
                 .addOnSuccessListener(aVoid -> {
                     Toast.makeText(this, "Datos actualizados correctamente", Toast.LENGTH_LONG).show();
-
+                    finish(); // Cierra la actividad después de la actualización exitosa
                 })
                 .addOnFailureListener(e -> {
                     // Mostrar mensaje de error en caso de fallo
                     Toast.makeText(this, "Error al actualizar los datos", Toast.LENGTH_LONG).show();
                 });
     }
+
+
+
 
 }
