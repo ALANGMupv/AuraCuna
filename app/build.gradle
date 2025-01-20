@@ -45,25 +45,24 @@ dependencies {
     implementation("com.google.firebase:firebase-auth")
     implementation("com.google.android.gms:play-services-auth:21.0.0")
     implementation 'com.google.firebase:firebase-auth:23.1.0'
-    // Añade esta línea
-    implementation 'com.firebaseui:firebase-ui-auth:8.0.0' // Asegúrate de usar la última versión
+    implementation 'com.firebaseui:firebase-ui-auth:8.0.0'
     implementation platform('com.google.firebase:firebase-bom:33.5.1')
     implementation("com.google.firebase:firebase-firestore:25.1.1")
     implementation 'com.google.android.gms:play-services-auth:20.7.0'
     implementation 'com.github.bumptech.glide:glide:4.12.0'
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
     implementation 'com.google.android.gms:play-services-base:18.1.0'
-    implementation 'com.google.android.gms:play-services-oss-licenses:17.0.0' // Si usas licencias abiertas
+    implementation 'com.google.android.gms:play-services-oss-licenses:17.0.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.12.0'
-
     implementation 'com.google.android.exoplayer:exoplayer:2.19.0'
-
     implementation 'org.eclipse.paho:org.eclipse.paho.client.mqttv3:1.2.5'
     implementation 'androidx.recyclerview:recyclerview:1.2.1'
+
     // Recycler
     implementation 'com.google.firebase:firebase-firestore:24.7.1'
     implementation 'com.github.bumptech.glide:glide:4.15.1'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.15.1'
+    
     // Exoplayer cámara
     implementation 'com.google.android.exoplayer:exoplayer-core:2.15.1'
         implementation 'com.google.android.exoplayer:exoplayer-core:2.15.1'

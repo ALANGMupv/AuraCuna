@@ -249,11 +249,6 @@ public class LoginActivity extends AppCompatActivity {
                 .addOnFailureListener(e -> mensaje("Error al registrar usuario: " + e.getLocalizedMessage()));
     }
 
-
-
-
-
-
     private boolean verificaCampos() {
         correo = etCorreo.getText().toString();
         contraseña = etContraseña.getText().toString();
