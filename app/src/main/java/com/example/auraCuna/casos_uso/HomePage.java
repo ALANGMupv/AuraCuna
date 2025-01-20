@@ -30,6 +30,7 @@ import com.example.auraCuna.datos.LuzService;
 import com.example.auraCuna.datos.MusicaService;
 import com.example.auraCuna.datos.ServoService;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import org.eclipse.paho.client.mqttv3.MqttClient;
@@ -59,6 +60,19 @@ public class HomePage extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.home);
+
+        // Verificar si el usuario está autenticado antes de mostrar la actividad
+        if (FirebaseAuth.getInstance().getCurrentUser() == null) {
+            // Redirigir al login si el usuario no está autenticado
+            Intent intent = new Intent(HomePage.this, LoginActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
+            finish(); // Finalizar HomePage para evitar que se muestre
+            return; // Salir para no ejecutar el resto del código
+        }
+
+        // Continuar con la inicialización de HomePage si el usuario está autenticado
         setContentView(R.layout.home);
 
         // Solicitar el permiso de notificación

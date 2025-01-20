@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -36,6 +37,7 @@ public class RegistroActivity extends AppCompatActivity {
     private ProgressDialog dialogo;
     private EditText etCorreo, etContraseña;
     private EditText etRepContraseña, etNombre, etApellido;
+    private ImageView btnTwitter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,7 +63,20 @@ public class RegistroActivity extends AppCompatActivity {
                 .requestEmail()
                 .build();
         googleSignInClient = GoogleSignIn.getClient(this, gso);
+
+        //Login con Twitter
+        btnTwitter = findViewById(R.id.twitter);
+
+        btnTwitter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(RegistroActivity.this, TwitterActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                startActivity(intent);
+            }
+        });
     }
+
 
     public void autentificarGoogle(View view) {
         // Revoca el acceso de la cuenta previamente seleccionada
