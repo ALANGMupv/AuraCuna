@@ -144,7 +144,6 @@ public class RegistroActivity extends AppCompatActivity {
         datosUsuario.put("nombre", nombre != null ? nombre : "Nombre desconocido");
         datosUsuario.put("apellido", apellidos != null ? apellidos : "Apellido desconocido");
         datosUsuario.put("correo", correo);
-        datosUsuario.put("cunaAsociada", "cuna1");
 
         db.collection("usuarios").document(userId).set(datosUsuario).addOnSuccessListener(aVoid -> {
             Snackbar.make(findViewById(R.id.contenedor), "Usuario registrado exitosamente.", Snackbar.LENGTH_LONG).show();
