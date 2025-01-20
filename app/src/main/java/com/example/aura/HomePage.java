@@ -49,6 +49,7 @@ public class HomePage extends AppCompatActivity {
     private MqttClient client;
     private MqttConnectOptions options;
 
+    // Botones
     private Button buttonServo;
     private Button buttonLuz;
     private Button buttonMusica;
