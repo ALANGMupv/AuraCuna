@@ -126,8 +126,6 @@ public class NotisActivity extends AppCompatActivity {
                 });
     }
 
-
-
     private void addNotification(String title, String description, String time) {
         // Crear un objeto Notis con la notificación
         Notis notis = new Notis(title, description, time);
