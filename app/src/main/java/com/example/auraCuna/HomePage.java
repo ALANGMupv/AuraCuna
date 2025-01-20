@@ -47,12 +47,15 @@ public class HomePage extends AppCompatActivity {
     private MqttClient client;
     private MqttConnectOptions options;
 
+    // Botones
     private Button buttonServo;
     private Button buttonLuz;
+    private Button buttonMusica;
 
     private boolean isServoMoving = false;
     private boolean isLuzOn = false;
     private boolean isReconnecting = false;
+    private boolean isMusicPlaying = false;
 
     private static final String CHANNEL_ID = "MQTT_Notifications";
 
@@ -80,7 +83,9 @@ public class HomePage extends AppCompatActivity {
         buttonLuz = findViewById(R.id.luz);
         button6 = findViewById(R.id.button6); // Botón de Temperatura
         button7 = findViewById(R.id.button7); // Botón de Humedad
+        buttonMusica = findViewById(R.id.button4);
 
+        buttonMusica.setOnClickListener(v -> toggleMusic());
         buttonServo.setOnClickListener(v -> toggleServo());
         buttonLuz.setOnClickListener(v -> toggleLuz());
 
@@ -139,6 +144,42 @@ public class HomePage extends AppCompatActivity {
         if (player != null) {
             player.release();
         }
+    }
+
+    private void toggleMusic() {
+        new Thread(() -> {
+            try {
+                if (!client.isConnected()) {
+                    Log.w("MQTT", "El cliente no está conectado. Intentando reconectar...");
+                    reconnectMQTT();
+                    return;
+                }
+
+                isMusicPlaying = !isMusicPlaying;
+
+                String message = isMusicPlaying ? "1" : "0"; // "1" para activar, "0" para desactivar
+                String topic = "cuna/musica"; // Tópico para la música
+
+                client.publish(topic, new MqttMessage(message.getBytes())); // Enviar comando
+
+                Log.i("MQTT", "Estado de la música cambiado: " + message);
+
+                runOnUiThread(() -> {
+                    // Actualiza el texto del botón según el estado
+                    buttonMusica.setText(isMusicPlaying ? "Detener Música" : "Reproducir Música");
+
+                    // Manejar notificaciones
+                    if (isMusicPlaying) {
+                        showMusicNotification();
+                    } else {
+                        cancelMusicNotification();
+                    }
+                });
+
+            } catch (MqttException e) {
+                Log.e("MQTT", "Error al enviar comando MQTT: " + e.getMessage(), e);
+            }
+        }).start();
     }
 
 
@@ -326,6 +367,28 @@ public class HomePage extends AppCompatActivity {
             notificationManager.cancel(2);
         }
     }
+
+    private void showMusicNotification() {
+        Intent intent = new Intent(this, HomePage.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_IMMUTABLE);
+
+        Notification notification = new NotificationCompat.Builder(this, CHANNEL_ID)
+                .setContentTitle("Música de la cuna")
+                .setContentText("La música está reproduciéndose.")
+                .setSmallIcon(R.mipmap.ic_music) // Usa un icono relacionado con la música
+                .setContentIntent(pendingIntent)
+                .build();
+
+        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        notificationManager.notify(3, notification); // ID único para música
+    }
+
+    private void cancelMusicNotification() {
+        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        notificationManager.cancel(3); // Cancela la notificación de música
+    }
+
 
     private void createNotificationChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
