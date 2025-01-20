@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.auraCuna.R;
 import com.example.auraCuna.datos.TiendaAdaptador;
+import com.example.auraCuna.model.Tienda;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 

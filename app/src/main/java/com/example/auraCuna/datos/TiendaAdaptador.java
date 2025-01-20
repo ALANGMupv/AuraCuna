@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.auraCuna.R;
-import com.example.auraCuna.casos_uso.Tienda;
+import com.example.auraCuna.model.Tienda;
 
 import java.util.List;
 
