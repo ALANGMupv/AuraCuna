@@ -121,6 +121,13 @@ public class HomePage extends AppCompatActivity {
 
         obtenerDatosTemperaturaYHumedad();
 
+        // Botón notis
+        Button botonNotif = findViewById(R.id.botonNotif);
+        botonNotif.setOnClickListener(v -> {
+            Intent intent = new Intent(HomePage.this, NotisActivity.class);
+            startActivity(intent);
+        });
+
         // Cámara
         // Vincula la vista del reproductor
         playerView = findViewById(R.id.videoPlayer);
