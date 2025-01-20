@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.TimeZone;
 
 public class NotisActivity extends AppCompatActivity {
 
@@ -90,10 +91,11 @@ public class NotisActivity extends AppCompatActivity {
                         double temperatura = documentSnapshot.getDouble("temperatura");
                         double humedad = documentSnapshot.getDouble("humedad");
                         String enCuna = documentSnapshot.getString("estadoCuna"); // Obtener el valor como String
-                        Date timestamp = new Date(); // Usar la hora actual como marca temporal
-
-                        // Formatear la hora
-                        String time = new SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(timestamp);
+                        // Obtener la hora actual con la zona horaria correcta
+                        TimeZone timeZone = TimeZone.getDefault();
+                        SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss", Locale.getDefault());
+                        dateFormat.setTimeZone(timeZone); // Configurar la zona horaria
+                        String time = dateFormat.format(new Date()); // Formatear la hora actual
 
                         // Verificar las condiciones de la temperatura
                         if (temperatura < TEMP_MIN) {
