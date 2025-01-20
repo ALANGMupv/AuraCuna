@@ -1,5 +1,8 @@
 <resources>
     <string name="app_name">ProyectoFirebase</string>
     <string name="default_web_client_id" translatable="false">349702169144-d8tqo5khpbqruirna51vtsndgc43nqf4.apps.googleusercontent.com</string>
+    <string name="twitter_consumer_key">CIAMPbb6DCvEbmlPCkzpHyBQ0</string>
+    <string name="twitter_consumer_secret">TIOspLhmUtbEmeF6p7cdj1QFS4KmN7hPLh4a1wsbtBooGGAz7V</string>
+
 
 </resources>

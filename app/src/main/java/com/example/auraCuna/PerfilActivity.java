@@ -71,8 +71,36 @@ public class PerfilActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        cargarDatosUsuario();
+
+        // Obtener el usuario autenticado
+        FirebaseUser usuario = FirebaseAuth.getInstance().getCurrentUser();
+
+        if (usuario != null) {
+            // Acceso a Firestore
+            FirebaseFirestore db = FirebaseFirestore.getInstance();
+            db.collection("usuarios").document(usuario.getUid())
+                    .get()
+                    .addOnSuccessListener(documentSnapshot -> {
+                        if (documentSnapshot.exists()) {
+                            // Recuperar datos del usuario
+                            String nombre = documentSnapshot.getString("nombre");
+                            String apellidos = documentSnapshot.getString("apellido");
+
+                            // Actualizar los TextViews
+                            tvNombre.setText(nombre != null ? nombre : "Nombre no disponible");
+                            tvApellido.setText(apellidos != null ? apellidos : "Apellido no disponible");
+                        } else {
+                            Toast.makeText(this, "No se encontraron datos del usuario", Toast.LENGTH_SHORT).show();
+                        }
+                    })
+                    .addOnFailureListener(e ->
+                            Toast.makeText(this, "Error al cargar los datos del usuario", Toast.LENGTH_SHORT).show()
+                    );
+        } else {
+            Toast.makeText(this, "Usuario no autenticado", Toast.LENGTH_SHORT).show();
+        }
     }
+
 
     private void cargarDatosUsuario() {
         FirebaseUser user = auth.getCurrentUser();
@@ -137,17 +165,29 @@ public class PerfilActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == REQUEST_CODE_EDITAR_DATOS && resultCode == RESULT_OK) {
-            // Recibir los datos actualizados
-            String nombre = data.getStringExtra("nombre");
-            String apellidos = data.getStringExtra("apellidos");
+            if (data != null) {
+                // Obtener los datos actualizados
+                String nombre = data.getStringExtra("nombre");
+                String apellidos = data.getStringExtra("apellidos");
 
-            // Actualizar los TextViews con los nuevos datos
-            if (nombre != null && apellidos != null) {
-                tvNombre.setText(nombre);
-                tvApellido.setText(apellidos);
+                // Validar que los datos no sean nulos ni vacíos
+                if (nombre != null && !nombre.trim().isEmpty()) {
+                    tvNombre.setText(nombre);
+                } else {
+                    tvNombre.setText("Nombre no disponible");
+                }
+
+                if (apellidos != null && !apellidos.trim().isEmpty()) {
+                    tvApellido.setText(apellidos);
+                } else {
+                    tvApellido.setText("Apellido no disponible");
+                }
+            } else {
+                Toast.makeText(this, "No se recibieron datos", Toast.LENGTH_SHORT).show();
             }
         }
     }
+
 
 }
 

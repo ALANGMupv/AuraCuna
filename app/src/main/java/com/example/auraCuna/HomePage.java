@@ -14,8 +14,11 @@ import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,6 +39,9 @@ import org.eclipse.paho.client.mqttv3.MqttMessage;
 import com.google.android.exoplayer2.ExoPlayer;
 import com.google.android.exoplayer2.MediaItem;
 import com.google.android.exoplayer2.ui.PlayerView;
+
+import java.util.Arrays;
+import java.util.List;
 
 public class HomePage extends AppCompatActivity {
 
@@ -140,6 +146,32 @@ public class HomePage extends AppCompatActivity {
         // Prepara e inicia la reproducción
         player.prepare();
         player.play();
+
+        // Configuración del Spinner
+        Spinner spinner = findViewById(R.id.customSpinner);
+        List<String> datos = Arrays.asList("Cuna bebé Kevin");
+        // Configurar adaptador
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(
+                this,
+                R.layout.custom_spinner_item, // Layout personalizado para los elementos
+                datos
+        );
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+
+        // Listener de selección
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String seleccion = parent.getItemAtPosition(position).toString();
+                Toast.makeText(HomePage.this, "Seleccionaste: " + seleccion, Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                // Acción opcional
+            }
+        });
     }
 
     // onDestroy cámara
