@@ -24,11 +24,11 @@
 
             <com.github.mikephil.charting.charts.LineChart
                 android:id="@+id/grafica_ambiente"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="248dp"
-                android:layout_marginStart="8dp"
+                android:layout_marginStart="16dp"
                 android:layout_marginTop="24dp"
-                android:layout_marginEnd="8dp"
+                android:layout_marginEnd="16dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView14">
@@ -108,11 +108,13 @@
 
                     <TextView
                         android:id="@+id/textView20"
-                        android:layout_width="126dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="31dp"
                         android:fontFamily="@font/quicksand_bold"
                         android:text="Temperatura"
+                        android:textColor="@color/black"
                         android:textSize="20dp"
+                        android:textStyle="bold"
                         app:layout_constraintBottom_toBottomOf="@+id/textView24"
                         app:layout_constraintEnd_toStartOf="@+id/textView24"
                         app:layout_constraintHorizontal_bias="0.5"
@@ -134,11 +136,13 @@
 
                     <TextView
                         android:id="@+id/textView23"
-                        android:layout_width="71dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="28dp"
                         android:fontFamily="@font/quicksand_bold"
-                        android:text="Optima"
+                        android:text="Óptima"
+                        android:textColor="@color/black"
                         android:textSize="20dp"
+                        android:textStyle="bold"
                         app:layout_constraintEnd_toEndOf="@+id/textView25"
                         app:layout_constraintStart_toStartOf="@+id/textView25"
                         app:layout_constraintTop_toTopOf="@+id/textView22" />
@@ -150,7 +154,9 @@
                         android:layout_marginTop="32dp"
                         android:fontFamily="@font/quicksand_bold"
                         android:text="AVG"
+                        android:textColor="@color/black"
                         android:textSize="20dp"
+                        android:textStyle="bold"
                         app:layout_constraintEnd_toEndOf="@+id/textView24"
                         app:layout_constraintHorizontal_bias="0.526"
                         app:layout_constraintStart_toStartOf="@+id/textView24"
@@ -163,7 +169,9 @@
                         android:layout_marginTop="32dp"
                         android:fontFamily="@font/quicksand_bold"
                         android:text="Humedad"
+                        android:textColor="@color/black"
                         android:textSize="20dp"
+                        android:textStyle="bold"
                         app:layout_constraintEnd_toEndOf="@+id/textView20"
                         app:layout_constraintHorizontal_bias="0.5"
                         app:layout_constraintStart_toStartOf="@+id/textView20"

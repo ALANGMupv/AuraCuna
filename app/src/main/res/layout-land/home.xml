@@ -53,16 +53,17 @@
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_marginTop="10dp"
-                android:text="El bebé no está en la cuna"
-                android:textColor="@color/white"
-                android:textSize="18sp"
                 android:gravity="center"
+                android:text="El bebé no está en la cuna"
+                android:textColor="@color/amarillo"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:visibility="invisible"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHeight_percent="0.3"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/customSpinner"
-                app:layout_constraintWidth_percent="0.8"
-                android:visibility="invisible" />
+                app:layout_constraintWidth_percent="0.8" />
 
             <Button
                 android:id="@+id/botonNotif"
