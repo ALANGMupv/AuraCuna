@@ -39,12 +39,12 @@ public class TiendaAdaptador extends RecyclerView.Adapter<TiendaAdaptador.ViewHo
             tienda.setText(tiendaObj.getNombre());
             direccion.setText(tiendaObj.getUrlCompra());
 
-            // Usamos Glide para cargar la imagen desde la URL
+            // Glide para cargar la imagen desde la URL
             Glide.with(itemView.getContext())
                     .load(tiendaObj.getFotoUrl())
                     .into(foto);
 
-            // Configuramos el OnClickListener para abrir la URL en un navegador
+            // OnClickListener para abrir la URL en un navegador
             direccion.setOnClickListener(v -> {
                 Intent intent = new Intent(Intent.ACTION_VIEW);
                 intent.setData(Uri.parse(tiendaObj.getUrlCompra()));

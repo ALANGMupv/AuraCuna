@@ -55,8 +55,8 @@ public class NotisAdapter extends RecyclerView.Adapter<NotisAdapter.NotisViewHol
 
     // Método para agregar una nueva notificación
     public void addNotis(Notis notis) {
-        notisList.add(0, notis); // Agrega al inicio
-        notifyItemInserted(0); // Notifica al RecyclerView
+        notisList.add(0, notis);
+        notifyItemInserted(0);
     }
 
     // Método para actualizar toda la lista

@@ -107,7 +107,7 @@ public class TwitterActivity extends HomePage {
 
     private void navigateToHomePage() {
         startActivity(new Intent(TwitterActivity.this, HomePage.class));
-        Toast.makeText(TwitterActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
+        Toast.makeText(TwitterActivity.this, "Inicio se sesión exitoso", Toast.LENGTH_SHORT).show();
         finish(); // Finalizar actividad actual para evitar volver atrás
     }
 

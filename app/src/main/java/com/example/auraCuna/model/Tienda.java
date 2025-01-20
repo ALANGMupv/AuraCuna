@@ -5,7 +5,7 @@ public class Tienda {
     private String fotoUrl;
     private String urlCompra;
 
-    public Tienda() { }  // Constructor vacío necesario para Firestore
+    public Tienda() { }
 
     public Tienda(String nombre, String fotoUrl, String urlCompra) {
         this.nombre = nombre;
