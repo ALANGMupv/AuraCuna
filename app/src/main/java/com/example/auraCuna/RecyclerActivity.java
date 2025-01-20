@@ -1,4 +1,4 @@
-package com.example.aura;
+package com.example.auraCuna;
 
 import android.os.Bundle;
 import android.widget.Toast;

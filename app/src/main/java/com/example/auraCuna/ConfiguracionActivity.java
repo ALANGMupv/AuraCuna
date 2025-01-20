@@ -1,4 +1,4 @@
-package com.example.aura;
+package com.example.auraCuna;
 
 import android.content.Intent;
 import android.os.Bundle;

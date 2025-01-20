@@ -1,12 +1,10 @@
-package com.example.aura;
+package com.example.auraCuna;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.aura.R;
+import com.example.auraCuna.R;
 
 public class AcercaDeActivity extends AppCompatActivity {
     @Override public void onCreate(Bundle savedInstanceState) {

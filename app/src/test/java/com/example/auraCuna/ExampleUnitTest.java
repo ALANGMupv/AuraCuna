@@ -1,4 +1,4 @@
-package com.example.aura;
+package com.example.auraCuna;
 
 import org.junit.Test;
 

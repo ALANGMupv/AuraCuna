@@ -1,4 +1,4 @@
-package com.example.aura;
+package com.example.auraCuna;
 
 
 import android.app.ProgressDialog;
@@ -13,7 +13,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 public class ReestablecerContraseñaActivity extends AppCompatActivity {

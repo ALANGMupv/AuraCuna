@@ -4,11 +4,11 @@ plugins {
 }//
 
 android {
-    namespace 'com.example.aura'
+    namespace 'com.example.auraCuna'
     compileSdk 34
 
     defaultConfig {
-        applicationId "com.example.aura"
+        applicationId "com.example.auraCuna"
         minSdk 24
         targetSdk 34
         versionCode 1
